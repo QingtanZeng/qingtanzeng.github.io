@@ -1,14 +1,12 @@
 ---
 layout: page
 title: Computational Loco-Manipulation of Humanoid Robots
-description: C++ implementation of trajectory generation of FLM based on SCP and DRS
+description: C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS
 img: assets/img/12.jpg
 importance: 1
 category: work
 related_publications: false
 ---
-
-# Computational Loco-Manipulation of Humanoid Robots
 
 ## I. Introduction
 
@@ -87,20 +85,18 @@ to complete upper limb manipulation tasks.
 
 ### 2.1 Full Loco-Manipulation Model
 
-**State vector is**
+**The state vector is**
 $\left\lbrack h_{com},\ q_{b},q_{j} \right\rbrack \in R^{12 + n_{a}}$,
-CoM momentum
-$h_{com} = \left\lbrack {lm}_{com},{am}_{com} \right\rbrack \in R^{6}$
-at Frame $G_{LWA}$, floating base position
-$q_{b} = \left\lbrack r_{IB},\Phi_{IB} \right\rbrack \in R^{6}$ at Frame
-$B_{LWA}$，Joint position $q_{j} \in R^{n_{a}}$. **Control input is**
-$\lbrack f_{fl},f_{fr},f_{hl},f_{hr},v_{j}\rbrack$，Contact force
-$f = \left\lbrack f_{c},\tau_{c} \right\rbrack \in R^{6}$, and joint
-velocity $v_{j} \in R^{n_{a}}$。Other variables include the location of
-the contact point $p_{c_{i}}(q)\ $and CoM position
-$p_{com}(q)$，floating base speed
-$v_{b} = {\dot{q}}_{b} = \lbrack lv_{IB},av_{IB}\rbrack$ and contacts'
-speed
+CoM momentum is $h_{com} = \left\lbrack {lm}_{com},{am}_{com} \right\rbrack \in R^{6}$
+at Frame $G_{LWA}$, 
+floating base position $q_{b} = \left\lbrack r_{IB},\Phi_{IB} \right\rbrack \in R^{6}$ 
+at Frame $B_{LWA}$, Joint position $q_{j} \in R^{n_{a}}$. 
+**The control input is** $\lbrack f_{fl},f_{fr},f_{hl},f_{hr},v_{j}\rbrack$, Contact force
+$f = \left\lbrack f_{c},\tau_{c} \right\rbrack \in R^{6}$, 
+and joint velocity $v_{j} \in R^{n_{a}}$. 
+Other variables include the location of the contact point $p_{c_{i}}(q)\ $
+and CoM position $p_{com}(q)$, 
+floating base velocity $v_{b} = {\dot{q}}_{b} = \lbrack lv_{IB},av_{IB}\rbrack$ and contacts' velocity 
 $v_{c_{i}}(v),\ v = \left\lbrack v_{b},v_{j} \right\rbrack = \lbrack{\dot{q}}_{b},{\dot{q}}_{j}\rbrack$.
 
 It should be noted that the whole-body motion planning does not
@@ -113,7 +109,7 @@ to $\delta(v_{b},v_{j})$, the differential chain rule needs to be used
 to indirectly obtain the Jacobian coefficient relatively to
 $\delta(h_{com},\ {\dot{q}}_{j})$.
 
-#### 2.1.A CoM Dynamics
+###### 2.1.A CoM Dynamics
 
 $${\dot{\mathbf{h}}}_{\mathbf{com}}\mathbf{=}\begin{bmatrix}
 \sum_{\mathbf{i = 1}}^{\mathbf{n}_{\mathbf{c}}}\mathbf{f}_{\mathbf{c}_{\mathbf{i}}}\mathbf{+ mg} \\
@@ -129,7 +125,7 @@ point and CoM are nonlinear relationship with
 $q = \left\lbrack q_{b},q_{j} \right\rbrack\ $described by the SE(3)
 transformation.
 
-#### 2.1.B Whole-body kinematics
+###### 2.1.B Whole-body kinematics
 
 Full-body motion planning requires not only planning contact forces and
 center-of-mass momentum, but also the position and velocity of each limb
@@ -142,10 +138,11 @@ $$h_{com} = \left\lbrack A_{b}(q),\ A_{j}(q) \right\rbrack\begin{bmatrix}
 \end{bmatrix}$$
 
 $${\dot{q}}_{b} = A_{b}^{- 1}(q)(h_{com} - A_{j}(q){\dot{q}}_{j})$$
+
 $A(q) \in R^{6 \times (6 + n_{a})}$ is Centroidal Momentum Matrix (CMM),
 obtained recursively by the CCRBA algorithm.
 
-#### 2.1.C Task dynamics
+###### 2.1.C Task dynamics
 
 在操作任务(Manipulation
 Task)中，被操作对象的动力学千差万别且较重的操作任务会显著反作用于本机，导致失稳或任务失败，如搬运重物、推拉弹簧门等体力任务，因此Loco-Manipulation问题建模必须包含操作任务的动力学及其规划
@@ -154,13 +151,14 @@ $${\dot{x}}_{t} = \begin{bmatrix}
 v_{t} \\
 M_{t}^{- 1}( - J_{t}^{T}f_{t} - b_{t})
 \end{bmatrix}$$
+
 其中，状态$v_{t}$为箱子质心速度，$M_{t}$为惯量矩阵，$J_{t}$是，$b_{t}$，$f_{t}$为双手作用于对象的力和扭矩。
 
 ## III. Transcription of Full Loco-Manipulation Model
 
 ### 3.1 Transcription of Full Loco-Manipulation Model
 
-#### 3.1.A Transcription of CoM Dynamics
+###### 3.1.A Transcription of CoM Dynamics
 
 Differentiate the angular momentum and linear momentum separately,
 noting that the differential of position is the same as the Jacobian
@@ -181,6 +179,7 @@ $$\delta\dot{lm} = I_{fl}\begin{bmatrix}
 \delta f_{c} \\
 \delta\tau_{c}
 \end{bmatrix} + \ldots$$
+
 Considering only the relevant state and control inputs, the linearized
 state equation is
 
@@ -201,17 +200,18 @@ A_{G}
 \end{matrix}
 \end{bmatrix}^{T}$$
 
-#### 3.1.B Transcription of Whole-body kinematics
+###### 3.1.B Transcription of Whole-body kinematics
 
 Differentiating the equation,
 
 $$\delta{\dot{q}}_{b} = \frac{\partial v_{b}}{\partial h}\delta h_{com} + \frac{\partial v_{b}}{\partial{\dot{q}}_{j}}\delta{\dot{q}}_{j} + \frac{\partial v_{b}}{\partial q}\delta q = A_{b}^{- 1}\delta h_{com} - A_{b}^{- 1}A_{j}\delta{\dot{q}}_{j} - A_{b}^{- 1}\frac{\partial h_{com}}{\partial q}\delta q$$
 
 $$\frac{\partial v_{b}}{\partial q} = - A_{b}^{- 1}\frac{\partial h_{com}}{\partial q}$$
+
 Therefore, kinematic linearization requires first calculating the
 partial derivative of CoM momentum with respect to joint position
-$dhdq\ $, which recursive algorithms can achieve
-$O\left( N^{2} \right)\ $complexity.
+$dhdq$, which recursive algorithms can achieve
+$O(N^{2})$complexity.
 
 Although the automatic differential can be calculated directly,
 combining above theoretical formulas and analytical methods is more
@@ -233,9 +233,9 @@ $$A_{B} = \begin{bmatrix}
 A_{b}^{- 1} & - A_{b}^{- 1}dhdq\ 
 \end{bmatrix},\ \ \ B_{B} = \lbrack 0,\ \ \  - A_{b}^{- 1}A_{j}\rbrack$$
 
-#### 3.1.C Transcription of Task dynamics
+###### 3.1.C Transcription of Task dynamics
 
-#### 3.1.D Dynamics Transcription Summary
+###### 3.1.D Dynamics Transcription Summary
 
 If task dynamics are not considered, then
 
@@ -268,7 +268,7 @@ B_{G} & 0 \\
 ## IV. Real-time Implementations
 
 Refer directly to Project 2 and
-[**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl) [5].
+[**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl)[5].
 
 ## V. Reference
 
@@ -284,4 +284,4 @@ of rigid body dynamics algorithms. In Robotics: Science and systems (RSS
 [4] Farshidian, F. (2023). OCS2: An open-source library for optimal
 control of switched systems. Accessed: May, 23. \
 [5] Qingtan Zeng, Computational Trajectory Generation,
-\[https://github.com/QingtanZeng/CTrjGen.jl\]
+\[<https://github.com/QingtanZeng/CTrjGen.jl>\]
