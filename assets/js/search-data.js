@@ -418,7 +418,7 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "projects-computational-loco-manipulation-of-humanoid-robots",
           title: 'Computational Loco-Manipulation of Humanoid Robots',
-          description: "C++ implementation of trajectory generation of FLM based on SCP and DRS",
+          description: "C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
             },},{id: "projects-project-2",
