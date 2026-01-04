@@ -421,6 +421,11 @@ ninja.data = [{
           description: "Julia implementation of Sequential Convex Programming with Conic Solver",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
+            },},{id: "projects-computational-trajectory-generation",
+          title: 'Computational Trajectory Generation',
+          description: "Julia implementation of Sequential Convex Programming with Conic Solver",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_project_backup/";
             },},{id: "projects-project-2",
           title: 'project 2',
           description: "a project with a background image and giscus comments",
