@@ -72,7 +72,7 @@ generated offline and fitted online, **penalize deviations** from the
 default humanoid posture, and **optimize the impact** of contact forces
 and execution costs. Therefore, it typically consists of the following
 components:
-1. **Foot swing tracking** $p_{f} - p^{ref}\ $;
+1. **Foot swing tracking** $p_{f} - p^{ref}$;
 2. **Quadratic Penalty of** $q - q^{ref}$;
 3. **Secondary cost items for control inputs** $u^{T}Ru$ and
 **Jerk**;
@@ -86,30 +86,30 @@ to complete upper limb manipulation tasks.
 ### 2.1 Full Loco-Manipulation Model
 
 **The state vector is**
-$\left\lbrack h_{com},\ q_{b},q_{j} \right\rbrack \in R^{12 + n_{a}}$,
-CoM momentum is $h_{com} = \left\lbrack {lm}_{com},{am}_{com} \right\rbrack \in R^{6}$
+$[ h_{com}, q_{b},q_{j} ] \in R^{12 + n_{a}}$,
+CoM momentum is $h_{com} = [ {lm}_{com},{am}_{com} ] \in R^{6}$
 at Frame $G_{LWA}$, 
-floating base position $q_{b} = \left\lbrack r_{IB},\Phi_{IB} \right\rbrack \in R^{6}$ 
+floating base position $q_{b} = [ r_{IB},Phi_{IB} ] \in R^{6}$ 
 at Frame $B_{LWA}$, Joint position $q_{j} \in R^{n_{a}}$. 
-**The control input is** $\lbrack f_{fl},f_{fr},f_{hl},f_{hr},v_{j}\rbrack$, Contact force
-$f = \left\lbrack f_{c},\tau_{c} \right\rbrack \in R^{6}$, 
+**The control input is** $[f_{fl},f_{fr},f_{hl},f_{hr},v_{j}]$, Contact force
+$f = [ f_{c}, tau_{c} ] \in R^{6}$, 
 and joint velocity $v_{j} \in R^{n_{a}}$. 
-Other variables include the location of the contact point $p_{c_{i}}(q)\ $
+Other variables include the location of the contact point $p_{c_{i}}(q)$
 and CoM position $p_{com}(q)$, 
-floating base velocity $v_{b} = {\dot{q}}_{b} = \lbrack lv_{IB},av_{IB}\rbrack$ and contacts' velocity 
-$v_{c_{i}}(v),\ v = \left\lbrack v_{b},v_{j} \right\rbrack = \lbrack{\dot{q}}_{b},{\dot{q}}_{j}\rbrack$.
+floating base velocity $v_{b} = [\dot{q}_{b} =  lv_{IB},av_{IB}]$ and contacts' velocity 
+$v_{c_{i}}(v), v = [ v_{b},v_{j} ] = {\dot{q}}_{b},{\dot{q}}_{j}$.
 
 It should be noted that the whole-body motion planning does not
-incorporate floating base speed$\ v_{b}\ $.Instead of using it as a
+incorporate floating base speed$ v_{b} $.Instead of using it as a
 control input, the nonlinear relationship is directly modeled with
-first-order derivative$\ {\dot{q}}_{b}\ $and
-$(h_{com},\ {\dot{q}}_{j})$. Therefore, when considering the contact
-point velocity $v_{c_{i}}(v)\ $'s first-order linearization relatively
+first-order derivative${dot{q}}_{b}$and
+$(h_{com}, {\dot{q}}_{j})$. Therefore, when considering the contact
+point velocity $v_{c_{i}}(v) $'s first-order linearization relatively
 to $\delta(v_{b},v_{j})$, the differential chain rule needs to be used
 to indirectly obtain the Jacobian coefficient relatively to
-$\delta(h_{com},\ {\dot{q}}_{j})$.
+$\delta(h_{com}, {\dot{q}}_{j})$.
 
-###### 2.1.A CoM Dynamics
+##### 2.1.A CoM Dynamics
 
 $${\dot{\mathbf{h}}}_{\mathbf{com}}\mathbf{=}\begin{bmatrix}
 \sum_{\mathbf{i = 1}}^{\mathbf{n}_{\mathbf{c}}}\mathbf{f}_{\mathbf{c}_{\mathbf{i}}}\mathbf{+ mg} \\
@@ -118,14 +118,14 @@ $${\dot{\mathbf{h}}}_{\mathbf{com}}\mathbf{=}\begin{bmatrix}
 
 The CoM dynamics equations, in the WORLD coordinate system, describe
 relationship between external contact forces and the center-of-mass
-momentum. They neglect the robot\'s internal pose and velocity, focusing
+momentum. They neglect the robot's internal pose and velocity, focusing
 only on the external force state.
-$r_{c_{i}} = p_{c_{i}}(q) - p_{com}(q)\ $, the location of the contact
+$r_{c_{i}} = p_{c_{i}}(q) - p_{com}(q)$, the location of the contact
 point and CoM are nonlinear relationship with
-$q = \left\lbrack q_{b},q_{j} \right\rbrack\ $described by the SE(3)
+$q = [ q_{b},q_{j} ]$described by the SE(3)
 transformation.
 
-###### 2.1.B Whole-body kinematics
+##### 2.1.B Whole-body kinematics
 
 Full-body motion planning requires not only planning contact forces and
 center-of-mass momentum, but also the position and velocity of each limb
@@ -142,7 +142,7 @@ $${\dot{q}}_{b} = A_{b}^{- 1}(q)(h_{com} - A_{j}(q){\dot{q}}_{j})$$
 $A(q) \in R^{6 \times (6 + n_{a})}$ is Centroidal Momentum Matrix (CMM),
 obtained recursively by the CCRBA algorithm.
 
-###### 2.1.C Task dynamics
+##### 2.1.C Task dynamics
 
 在操作任务(Manipulation
 Task)中，被操作对象的动力学千差万别且较重的操作任务会显著反作用于本机，导致失稳或任务失败，如搬运重物、推拉弹簧门等体力任务，因此Loco-Manipulation问题建模必须包含操作任务的动力学及其规划
@@ -158,7 +158,7 @@ M_{t}^{- 1}( - J_{t}^{T}f_{t} - b_{t})
 
 ### 3.1 Transcription of Full Loco-Manipulation Model
 
-###### 3.1.A Transcription of CoM Dynamics
+##### 3.1.A Transcription of CoM Dynamics
 
 Differentiate the angular momentum and linear momentum separately,
 noting that the differential of position is the same as the Jacobian
@@ -200,7 +200,7 @@ A_{G}
 \end{matrix}
 \end{bmatrix}^{T}$$
 
-###### 3.1.B Transcription of Whole-body kinematics
+##### 3.1.B Transcription of Whole-body kinematics
 
 Differentiating the equation,
 
@@ -233,9 +233,9 @@ $$A_{B} = \begin{bmatrix}
 A_{b}^{- 1} & - A_{b}^{- 1}dhdq\ 
 \end{bmatrix},\ \ \ B_{B} = \lbrack 0,\ \ \  - A_{b}^{- 1}A_{j}\rbrack$$
 
-###### 3.1.C Transcription of Task dynamics
+##### 3.1.C Transcription of Task dynamics
 
-###### 3.1.D Dynamics Transcription Summary
+##### 3.1.D Dynamics Transcription Summary
 
 If task dynamics are not considered, then
 
