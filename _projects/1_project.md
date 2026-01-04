@@ -25,28 +25,6 @@ performs automatic differentiation on FLM**, which would lead to
 due to the mixing of matrix inversions, CMM recursive algorithm and CoM
 momentum's partial derivative.
 
-Moreover, wb_humanoid_mpc adopts OCS2's "SQP" method with HPIPM solver,
-in which Riccati Recursion algorithm is highly efficient through ZOH
-discretization's sparse pattern. In my opinion, too many discrete
-nodes - up to 60 with 1.2s horizon and 20ms step size -- lead to **a
-huge convex subproblem, especially with many constraints**, in order to
-meet ZOH's assumption that variables in each interval remain constant.
-Besides, HPIPM **can't handle second-order cone (SOC)** constraints like
-friction cone, and several **hard constraints** are **converted into
-soft costs** (not sure reason).
-
-In contrast, the project gives derivatives of centroidal dynamics and
-whole-body kinematics through **theoretical derivation for hand-parser**
-and will implement **SCP with a first-order primal-dual solver**
-supports FOH discretization and SOC, resulting in **fewer nodes** (20
-nodes in 1s horizon) and **smoother trajectory** (piecewise continuous).
-Meanwhile a **customized solver** of fixed sparse pattern could be
-comparable in speed to HPIPM. Though this requires a **fixed-structure
-problem**, the engineering design of **static pre-allocation** for
-maximum size is ideal for loco-manipulation tasks, where all constraints
-and objectives are pre-modeled, then selectively activated by specific
-problem or states.
-
 ## II Model of Full Loco-Manipulation Model
 
 Loco-Manipulation requires simultaneous planning of the center of mass,
@@ -269,6 +247,28 @@ B_{G} & 0 \\
 \end{bmatrix}$$
 
 ## IV. Real-time Implementations
+
+Moreover, wb_humanoid_mpc adopts OCS2's "SQP" method with HPIPM solver,
+in which Riccati Recursion algorithm is highly efficient through ZOH
+discretization's sparse pattern. In my opinion, too many discrete
+nodes - up to 60 with 1.2s horizon and 20ms step size -- lead to **a
+huge convex subproblem, especially with many constraints**, in order to
+meet ZOH's assumption that variables in each interval remain constant.
+Besides, HPIPM **can't handle second-order cone (SOC)** constraints like
+friction cone, and several **hard constraints** are **converted into
+soft costs** (not sure reason).
+
+In contrast, the project gives derivatives of centroidal dynamics and
+whole-body kinematics through **theoretical derivation for hand-parser**
+and will implement **SCP with a first-order primal-dual solver**
+supports FOH discretization and SOC, resulting in **fewer nodes** (20
+nodes in 1s horizon) and **smoother trajectory** (piecewise continuous).
+Meanwhile a **customized solver** of fixed sparse pattern could be
+comparable in speed to HPIPM. Though this requires a **fixed-structure
+problem**, the engineering design of **static pre-allocation** for
+maximum size is ideal for loco-manipulation tasks, where all constraints
+and objectives are pre-modeled, then selectively activated by specific
+problem or states.
 
 Refer directly to Project 2 and
 [**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl)[5].
