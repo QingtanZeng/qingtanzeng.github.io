@@ -86,28 +86,31 @@ to complete upper limb manipulation tasks.
 ### 2.1 Full Loco-Manipulation Model
 
 **The state vector is**
-$[ h_{com}, q_{b},q_{j} ] \in R^{12 + n_{a}}$,
-CoM momentum is $h_{com} = [ {lm}_{com},{am}_{com} ] \in R^{6}$
-at Frame $G_{LWA}$, 
-floating base position $q_{b} = [ r_{IB},Phi_{IB} ] \in R^{6}$ 
-at Frame $B_{LWA}$, Joint position $q_{j} \in R^{n_{a}}$. 
-**The control input is** $[f_{fl},f_{fr},f_{hl},f_{hr},v_{j}]$, Contact force
-$f = [ f_{c}, tau_{c} ] \in R^{6}$, 
-and joint velocity $v_{j} \in R^{n_{a}}$. 
+$[ h_{\text{com}}, q_{b}, q_{j} ] \in \mathbb{R}^{12 + n_{a}}$.
+CoM momentum is $h_{\text{com}} = [ \text{lm}_{\text{com}}, \text{am}_{\text{com}} ] \in \mathbb{R}^{6}$
+at Frame $\mathcal{G}_{\text{LWA}}$.
+Floating base position $q_{b} = [ r_{IB}, \Phi_{IB} ] \in \mathbb{R}^{6}$
+at Frame $\mathcal{B}_{\text{LWA}}$. Joint position $q_{j} \in \mathbb{R}^{n_{a}}$.
+
+**The control input is**
+$[f_{fl}, f_{fr}, f_{hl}, f_{hr}, v_{j}]$.
+Contact force $f = [ f_{c}, \tau_{c} ] \in \mathbb{R}^{6}$,
+and joint velocity $v_{j} \in \mathbb{R}^{n_{a}}$.
+
 Other variables include the location of the contact point $p_{c_{i}}(q)$
-and CoM position $p_{com}(q)$, 
-floating base velocity $v_{b} = [\dot{q}_{b} =  lv_{IB},av_{IB}]$ and contacts' velocity 
-$v_{c_{i}}(v), v = [ v_{b},v_{j} ] = {\dot{q}}_{b},{\dot{q}}_{j}$.
+and CoM position $p_{\text{com}}(q)$.
+Floating base velocity $v_{b} = \dot{q}_{b} = [ \text{lv}_{IB}, \text{av}_{IB} ]$
+and contacts' velocity $v_{c_{i}}(v)$, where $v=[v_{b}, v_{j}]$.
 
 It should be noted that the whole-body motion planning does not
-incorporate floating base speed$ v_{b} $.Instead of using it as a
+incorporate floating base speed $v_{b}$. Instead of using it as a
 control input, the nonlinear relationship is directly modeled with
-first-order derivative${dot{q}}_{b}$and
-$(h_{com}, {\dot{q}}_{j})$. Therefore, when considering the contact
-point velocity $v_{c_{i}}(v) $'s first-order linearization relatively
-to $\delta(v_{b},v_{j})$, the differential chain rule needs to be used
-to indirectly obtain the Jacobian coefficient relatively to
-$\delta(h_{com}, {\dot{q}}_{j})$.
+the first-order derivative $\dot{q}_{b}$ dependent on
+$(h_{\text{com}}, \dot{q}_{j})$. Therefore, when considering the contact
+point velocity $v_{c_{i}}(v)$'s first-order linearization with respect
+to $\delta(v_{b}, v_{j})$, the differential chain rule needs to be used
+to indirectly obtain the Jacobian coefficient with respect to
+$\delta(h_{\text{com}}, \dot{q}_{j})$.
 
 ##### 2.1.A CoM Dynamics
 
