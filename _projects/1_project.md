@@ -236,7 +236,9 @@ $${\begin{bmatrix}
 \end{bmatrix} = \begin{bmatrix}
 0 & I \\
 \frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial q_{t}}\  & \frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial v_{t}}\ 
-\end{bmatrix}\begin{bmatrix}
+\end{bmatrix}$$
+
+$$\begin{bmatrix}
 \delta q_{t} \\
 \delta v_{t}
 \end{bmatrix} + \left\lbrack - M_{t}^{- 1}J_{t}^{T} \right\rbrack\left\lbrack \delta f_{h} \right\rbrack
