@@ -35,27 +35,22 @@ dynamics.
 Locomotion needs to **meet various constraints** required for **lower
 limb gait tracking and dynamic balance**, and mainly consists of the
 following components:
-1. **Foot contact constraints**, such as the friction cone of the
-    standing foot, normal or zero velocity, contact moment, and zero
-    wrench of the swinging foot;
-2. **Terminal state constraints**, strictly satisfying the terminal
-    foot placement and corresponding whole-body pose determined by
-    upper-level perception and Gait Schedule.
-3. **Actuator constraints**: strictly adhere to the range of position
-    and speed amplitudes, torque amplitudes, and slopes of the joint
-    servo motor.
+1. **Foot contact constraints**, such as the friction cone and zero velocity 
+    of the standing foot; zero wrench and normal position& of the swinging foot; 
+2. **Foot placement constraints**, strictly satisfying the terminal foot placement 
+    and corresponding whole-body pose determined by upper-level perception and Gait Schedule.
+3. **State and Actuator constraints**: strictly adhere to the range of position 
+    and speed amplitudes, torque amplitudes, and slopes of the joint servo motor.
 
 Locomotion uses a **quadratic cost to track gait trajectories**
 generated offline and fitted online, **penalize deviations** from the
 default humanoid posture, and **optimize the impact** of contact forces
 and execution costs. Therefore, it typically consists of the following
 components:
-1. **Foot swing tracking** $p_{f} - p^{ref}$;
-2. **Quadratic Penalty of** $q - q^{ref}$;
-3. **Secondary cost items for control inputs** $u^{T}Ru$ and
-**Jerk**;
-4. **Approaching a target set of terminal state** with non-strict
-constraints.
+1. **Foot swing and base tracking** $e_{cW} = p_{cW} - p_{ref}$ ;
+2. **Regularization Penalty** $e_{nol} = q - q_{ref}$ ;
+3. **Quadratic optimization for control inputs** $L_{\tau} = \tau^T P_{\tau} \tau$ ;
+4. **ICP regularization** $e_{ICP} = p_{com} - p_{SS}$
 
 Similar to Locomotion, Manipulation also requires the addition of
 constraints and costs to satisfy the physical laws of hand contact and
@@ -90,7 +85,15 @@ to $\delta(v_{b}, v_{j})$, the differential chain rule needs to be used
 to indirectly obtain the Jacobian coefficient with respect to
 $\delta(h_{\text{com}}, \dot{q}_{j})$.
 
-##### 2.1.A CoM Dynamics
+State Vector: The state includes CoM momentum $h_{com} = [l_{mcom}, a_{mcom}] \in \mathbb{R}^6$ at Frame $G_{LWA}$, floating base position $q_b = [r_{IB}, \Phi_{IB}] \in \mathbb{R}^6$ at Frame $B_{LWA}$, and Joint position $q_j \in \mathbb{R}^{n_a}$. The total state vector is $[h_{com}, q_b, q_j] \in \mathbb{R}^{12+n_a}$ .
+
+Control Input: The inputs are contact forces $f = [f_c, \tau_c] \in \mathbb{R}^6$ (specifically $[f_{fl}, f_{fr}, f_{hl}, f_{hr}]$) and joint velocity $v_j \in \mathbb{R}^{n_a}$ .
+
+Other Variables: These include contact point location $p_{ci}(q)$, CoM position $p_{com}(q)$, floating base speed $v_b = \dot{q}_b = [lv_{IB}, av_{IB}]$, and contact speeds $v_{ci}(v)$ where $v = [v_b, v_j] = [\dot{q}_b, \dot{q}_j]$ .
+
+Note on Floating Base Speed: Whole-body motion planning does not incorporate floating base speed $v_b$ as a state24. Instead of using it as a control input, the nonlinear relationship is directly modeled with the first-order derivative $\dot{q}_b$ and $(h_{com}, q_j)$25. Therefore, when considering the first-order linearization of contact point velocity $v_{ci}(v)$ relative to $\delta(v_b, v_j)$, the differential chain rule is needed to indirectly obtain the Jacobian coefficient relative to $\delta(h_{com}, q_j)$
+
+##### 2.1.1 CoM Dynamics
 
 $${\dot{\mathbf{h}}}_{\mathbf{com}}\mathbf{=}\begin{bmatrix}
 \sum_{\mathbf{i = 1}}^{\mathbf{n}_{\mathbf{c}}}\mathbf{f}_{\mathbf{c}_{\mathbf{i}}}\mathbf{+ mg} \\
@@ -106,7 +109,7 @@ point and CoM are nonlinear relationship with
 $q = [ q_{b},q_{j} ]$described by the SE(3)
 transformation.
 
-##### 2.1.B Whole-body kinematics
+##### 2.1.2 Whole-body kinematics
 
 Full-body motion planning requires not only planning contact forces and
 center-of-mass momentum, but also the position and velocity of each limb
@@ -123,23 +126,55 @@ $${\dot{q}}_{b} = A_{b}^{- 1}(q)(h_{com} - A_{j}(q){\dot{q}}_{j})$$
 $A(q) \in R^{6 \times (6 + n_{a})}$ is Centroidal Momentum Matrix (CMM),
 obtained recursively by the CCRBA algorithm.
 
-##### 2.1.C Task dynamics
+##### 2.1.3 Task dynamics
 
-在操作任务(Manipulation
-Task)中，被操作对象的动力学千差万别且较重的操作任务会显著反作用于本机，导致失稳或任务失败，如搬运重物、推拉弹簧门等体力任务，因此Loco-Manipulation问题建模必须包含操作任务的动力学及其规划
+In manipulation tasks, heavy operation tasks will significantly react against the robot itself, 
+leading to instability or task failure (e.g., carrying heavy objects, pushing/pulling spring doors). 
+The dynamics of the manipulated object can be categorized and estimated via perception and priors. 
+Therefore, Loco-Manipulation modeling must include the dynamics and planning of the manipulation task.
 
-$${\dot{x}}_{t} = \begin{bmatrix}
-v_{t} \\
-M_{t}^{- 1}( - J_{t}^{T}f_{t} - b_{t})
-\end{bmatrix}$$
+Task State: $x_t = [q_t, v_t] \in \mathbb{R}^6$ .
+Control Input: The contact points of both hands .
+Object Dynamics:
 
-其中，状态$v_{t}$为箱子质心速度，$M_{t}$为惯量矩阵，$J_{t}$是，$b_{t}$，$f_{t}$为双手作用于对象的力和扭矩。
+$$\dot{x}_t = \begin{bmatrix} v_t \\ M_t^{-1}(-J_t^T f_t - b_t) \end{bmatrix}$$ 
+
+Where $v_t$ is the object velocity, $M_t$ is the object inertia matrix, $J_t$ is the object contact force mapping matrix, 
+$b_t$ represents forces related to position and velocity (e.g., spring force, friction), 
+and $f_t = [f_{hl}, f_{hr}]$ constitutes the reaction forces and torques 
+applied by the hands to the object.
+
+
+### 2.2 Constraints Summary
+
+In addition to centroidal dynamics and whole-body kinematics equality constraints, 
+constraints are required for lower limb gait tracking, 
+dynamic balance (foot contact/terminal state), and actuator limits (mechanical/motor).
+
+<p align="center">
+<img alt="prj01_constraints"
+    title="prj01_constraints"
+    src="assets/img/prj01_constraints.png"
+    width="800px" />
+</p>
+
+### 2.3 Cost Summary
+
+Locomotion employs quadratic costs to track trajectories, 
+penalize deviation from the default pose, and optimize impact/execution costs.
+
+<p align="center">
+<img alt="prj01_constraints"
+    title="prj01_constraints"
+    src="assets/img/prj01_constraints.png"
+    width="800px" />
+</p>
 
 ## III. Transcription of Full Loco-Manipulation Model
 
 ### 3.1 Transcription of Full Loco-Manipulation Model
 
-##### 3.1.A Transcription of CoM Dynamics
+##### 3.1.1 Transcription of CoM Dynamics
 
 Differentiate the angular momentum and linear momentum separately,
 noting that the differential of position is the same as the Jacobian
@@ -181,7 +216,7 @@ A_{G}
 \end{matrix}
 \end{bmatrix}^{T}$$
 
-##### 3.1.B Transcription of Whole-body kinematics
+##### 3.1.2 Transcription of Whole-body kinematics
 
 Differentiating the equation,
 
@@ -214,9 +249,27 @@ $$A_{B} = \begin{bmatrix}
 A_{b}^{- 1} & - A_{b}^{- 1}dhdq\ 
 \end{bmatrix},\ \ \ B_{B} = \lbrack 0,\ \ \  - A_{b}^{- 1}A_{j}\rbrack$$
 
-##### 3.1.C Transcription of Task dynamics
+##### 3.1.3 Transcription of Task dynamics
 
-##### 3.1.D Dynamics Transcription Summary
+Considering only relevant states and control inputs, the linearized state equation is:
+
+$$\begin{bmatrix} \delta \dot{q}_t \\ \delta \dot{v}_t \end{bmatrix} = \begin{bmatrix} 0 & I \\ \frac{\partial -M_t^{-1}b_t}{\partial q_t} & \frac{\partial -M_t^{-1}b_t}{\partial v_t} \end{bmatrix} \begin{bmatrix} \delta q_t \\ \delta v_t \end{bmatrix} + \begin{bmatrix} 0 \\ -M_t^{-1}J_t^T \end{bmatrix} \delta f_h$$
+
+This forms the system $\dot{x}_t = A_T \delta x_t + B_T \delta f_h$.
+
+$${\begin{bmatrix}
+\delta{\dot{q}}_{t} \\
+\delta{\dot{v}}_{t}
+\end{bmatrix} = \begin{bmatrix}
+0 & I \\
+\frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial q_{t}}\  & \frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial v_{t}}\ 
+\end{bmatrix}\begin{bmatrix}
+\delta q_{t} \\
+\delta v_{t}
+\end{bmatrix} + \left\lbrack - M_{t}^{- 1}J_{t}^{T} \right\rbrack\left\lbrack \delta f_{h} \right\rbrack
+}{{\dot{x}}_{t} = A_{T}\delta\left( x_{t} \right) + B_{T}\delta\left( f_{h} \right)}$$
+
+##### 3.1.4 Dynamics Transcription Summary
 
 If task dynamics are not considered, then
 
@@ -246,6 +299,18 @@ B_{G} & 0 \\
 \delta{\dot{q}}_{j}
 \end{bmatrix}$$
 
+If task dynamics are not considered:
+
+$$\begin{bmatrix} \delta \dot{h}_{com} \\ \delta \dot{q}_b \\ \delta \dot{q}_j \end{bmatrix} = \begin{bmatrix} 0 & 0 & A_G \\ A_b^{-1} & -A_b^{-1}\frac{dh}{dq} & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} \delta h_{com} \\ \delta q_b \\ \delta q_j \end{bmatrix} + \begin{bmatrix} B_G & 0 \\ 0 & -A_b^{-1}A_j \\ 0 & I \end{bmatrix} \begin{bmatrix} \delta f \\ \delta \dot{q}_j \end{bmatrix}$$$$\delta \dot{x}_F = A_F \delta x_F + B_F \delta u$$
+
+Where $x_F$ has dimension $12+n_a$, $A_F$ is $(12+n_a) \times (12+n_a)$, $u$ is $24+n_a$, and $B_F$ is $(12+n_a) \times (24+n_a)$.One can see large zero blocks in the equation, indicating that sparse matrix storage should be used.
+
+Considering manipulation task dynamics:
+
+$$\begin{bmatrix} \delta \dot{x} \\ \delta \dot{q}_t \\ \delta \dot{v}_t \end{bmatrix} = \begin{bmatrix} A_F & 0 & 0 \\ 0 & 0 & I \\ 0 & \frac{\partial b}{\partial q_t} & \frac{\partial b}{\partial v_t} \end{bmatrix} \begin{bmatrix} \delta x \\ \delta q_t \\ \delta v_t \end{bmatrix} + \begin{bmatrix} B_F & 0 \\ 0 & -M_t^{-1}J_t^T \\ \dots & f_h \dots \end{bmatrix}$$
+
+$$\delta \dot{x} = A \delta x + B \delta u$$
+
 ## IV. Real-time Implementations
 
 Moreover, wb_humanoid_mpc adopts OCS2's "SQP" method with HPIPM solver,
@@ -270,7 +335,7 @@ maximum size is ideal for loco-manipulation tasks, where all constraints
 and objectives are pre-modeled, then selectively activated by specific
 problem or states.
 
-Refer directly to Project 2 and
+Refer directly to <Computational Trajectory Generation> and
 [**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl)[5].
 
 ## V. Reference
