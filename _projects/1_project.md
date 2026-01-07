@@ -58,40 +58,13 @@ to complete upper limb manipulation tasks.
 
 ### 2.1 Full Loco-Manipulation Model
 
-**The state vector is**
-$[ h_{\text{com}}, q_{b}, q_{j} ] \in \mathbb{R}^{12 + n_{a}}$.
-CoM momentum is $h_{\text{com}} = [ \text{lm}_{\text{com}}, \text{am}_{\text{com}} ] \in \mathbb{R}^{6}$
-at Frame $\mathcal{G}_{\text{LWA}}$.
-Floating base position $q_{b} = [ r_{IB}, \Phi_{IB} ] \in \mathbb{R}^{6}$
-at Frame $\mathcal{B}_{\text{LWA}}$. Joint position $q_{j} \in \mathbb{R}^{n_{a}}$.
+<b>State Vector</b>: The state includes CoM momentum $h_{com} = [lm_{com}, am_{com}] \in \mathbb{R}^6$ at Frame $G_{LWA}$, floating base position $q_b = [r_{IB}, \Phi_{IB}] \in \mathbb{R}^6$ at Frame $B_{LWA}$, and Joint position $q_j \in \mathbb{R}^{n_a}$. The total state vector is $[h_{com}, q_b, q_j] \in \mathbb{R}^{12+n_a}$ .
 
-**The control input is**
-$[f_{fl}, f_{fr}, f_{hl}, f_{hr}, v_{j}]$.
-Contact force $f = [ f_{c}, \tau_{c} ] \in \mathbb{R}^{6}$,
-and joint velocity $v_{j} \in \mathbb{R}^{n_{a}}$.
+<b>Control Input</b>: The inputs are contact forces $f = [f_c, \tau_c] \in \mathbb{R}^6$ (specifically $[f_{fl}, f_{fr}, f_{hl}, f_{hr}]$) and joint velocity $v_j \in \mathbb{R}^{n_a}$ .
 
-Other variables include the location of the contact point $p_{c_{i}}(q)$
-and CoM position $p_{\text{com}}(q)$.
-Floating base velocity $v_{b} = \dot{q}_{b} = [ \text{lv}_{IB}, \text{av}_{IB} ]$
-and contacts' velocity $v_{c_{i}}(v)$, where $v=[v_{b}, v_{j}]$.
+Other Variables: These include contact point location $p_{ci}(q)$, CoM position $p_{com}(q)$, floating base speed $v_b = [lv_{IB}, av_{IB}]$ , and contact speeds $v_{ci}(v)$ where $v = [v_b, v_j] = [\dot{q}_b, \dot{q}_j]$ .
 
-It should be noted that the whole-body motion planning does not
-incorporate floating base speed $v_{b}$. Instead of using it as a
-control input, the nonlinear relationship is directly modeled with
-the first-order derivative $\dot{q}_{b}$ dependent on
-$(h_{\text{com}}, \dot{q}_{j})$. Therefore, when considering the contact
-point velocity $v_{c_{i}}(v)$'s first-order linearization with respect
-to $\delta(v_{b}, v_{j})$, the differential chain rule needs to be used
-to indirectly obtain the Jacobian coefficient with respect to
-$\delta(h_{\text{com}}, \dot{q}_{j})$.
-
-State Vector: The state includes CoM momentum $h_{com} = [l_{mcom}, a_{mcom}] \in \mathbb{R}^6$ at Frame $G_{LWA}$, floating base position $q_b = [r_{IB}, \Phi_{IB}] \in \mathbb{R}^6$ at Frame $B_{LWA}$, and Joint position $q_j \in \mathbb{R}^{n_a}$. The total state vector is $[h_{com}, q_b, q_j] \in \mathbb{R}^{12+n_a}$ .
-
-Control Input: The inputs are contact forces $f = [f_c, \tau_c] \in \mathbb{R}^6$ (specifically $[f_{fl}, f_{fr}, f_{hl}, f_{hr}]$) and joint velocity $v_j \in \mathbb{R}^{n_a}$ .
-
-Other Variables: These include contact point location $p_{ci}(q)$, CoM position $p_{com}(q)$, floating base speed $v_b = \dot{q}_b = [lv_{IB}, av_{IB}]$, and contact speeds $v_{ci}(v)$ where $v = [v_b, v_j] = [\dot{q}_b, \dot{q}_j]$ .
-
-Note on Floating Base Speed: Whole-body motion planning does not incorporate floating base speed $v_b$ as a state24. Instead of using it as a control input, the nonlinear relationship is directly modeled with the first-order derivative $\dot{q}_b$ and $(h_{com}, q_j)$25. Therefore, when considering the first-order linearization of contact point velocity $v_{ci}(v)$ relative to $\delta(v_b, v_j)$, the differential chain rule is needed to indirectly obtain the Jacobian coefficient relative to $\delta(h_{com}, q_j)$
+Note on Floating Base Speed: Whole-body motion planning does not incorporate floating base speed $v_b$ as a state. Instead of using it as a control input, the nonlinear relationship is directly modeled with the first-order derivative $v_b$ and $(h_{com}, q_j)$25. Therefore, when considering the first-order linearization of contact point velocity $v_{ci}(v)$ relative to $\delta(v_b, v_j)$, the differential chain rule is needed to indirectly obtain the Jacobian coefficient relative to $\delta(h_{com}, q_j)$
 
 ##### 2.1.1 CoM Dynamics
 
@@ -154,7 +127,7 @@ dynamic balance (foot contact/terminal state), and actuator limits (mechanical/m
 <p align="center">
 <img alt="prj01_constraints"
     title="prj01_constraints"
-    src="assets/img/prj01_constraints.png"
+    src="../assets/img/prj01_constraints.png"
     width="800px" />
 </p>
 
@@ -166,7 +139,7 @@ penalize deviation from the default pose, and optimize impact/execution costs.
 <p align="center">
 <img alt="prj01_constraints"
     title="prj01_constraints"
-    src="assets/img/prj01_constraints.png"
+    src="../assets/img/prj01_constraints.png"
     width="800px" />
 </p>
 
@@ -301,13 +274,20 @@ B_{G} & 0 \\
 
 If task dynamics are not considered:
 
-$$\begin{bmatrix} \delta \dot{h}_{com} \\ \delta \dot{q}_b \\ \delta \dot{q}_j \end{bmatrix} = \begin{bmatrix} 0 & 0 & A_G \\ A_b^{-1} & -A_b^{-1}\frac{dh}{dq} & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} \delta h_{com} \\ \delta q_b \\ \delta q_j \end{bmatrix} + \begin{bmatrix} B_G & 0 \\ 0 & -A_b^{-1}A_j \\ 0 & I \end{bmatrix} \begin{bmatrix} \delta f \\ \delta \dot{q}_j \end{bmatrix}$$$$\delta \dot{x}_F = A_F \delta x_F + B_F \delta u$$
+$$\begin{bmatrix} \delta \dot{h}_{com} \\ \delta \dot{q}_b \\ \delta \dot{q}_j \end{bmatrix} = \begin{bmatrix} 0 & 0 & A_G \\ A_b^{-1} & -A_b^{-1}\frac{dh}{dq} & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} \delta h_{com} \\ \delta q_b \\ \delta q_j \end{bmatrix} + \begin{bmatrix} B_G & 0 \\ 0 & -A_b^{-1}A_j \\ 0 & I \end{bmatrix} \begin{bmatrix} \delta f \\ \delta \dot{q}_j \end{bmatrix}$$
+
+$$\delta \dot{x}_F = A_F \delta x_F + B_F \delta u$$
 
 Where $x_F$ has dimension $12+n_a$, $A_F$ is $(12+n_a) \times (12+n_a)$, $u$ is $24+n_a$, and $B_F$ is $(12+n_a) \times (24+n_a)$.One can see large zero blocks in the equation, indicating that sparse matrix storage should be used.
 
 Considering manipulation task dynamics:
 
-$$\begin{bmatrix} \delta \dot{x} \\ \delta \dot{q}_t \\ \delta \dot{v}_t \end{bmatrix} = \begin{bmatrix} A_F & 0 & 0 \\ 0 & 0 & I \\ 0 & \frac{\partial b}{\partial q_t} & \frac{\partial b}{\partial v_t} \end{bmatrix} \begin{bmatrix} \delta x \\ \delta q_t \\ \delta v_t \end{bmatrix} + \begin{bmatrix} B_F & 0 \\ 0 & -M_t^{-1}J_t^T \\ \dots & f_h \dots \end{bmatrix}$$
+<p align="center">
+<img alt="prj01_fomula314"
+    title="prj01_fomula314"
+    src="../assets/img/prj01_fomula314.png"
+    width="400px" />
+</p>
 
 $$\delta \dot{x} = A \delta x + B \delta u$$
 
