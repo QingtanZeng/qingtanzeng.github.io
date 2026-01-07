@@ -137,9 +137,9 @@ Locomotion employs quadratic costs to track trajectories,
 penalize deviation from the default pose, and optimize impact/execution costs.
 
 <p align="center">
-<img alt="prj01_constraints"
-    title="prj01_constraints"
-    src="/assets/img/prj01_constraints.png"
+<img alt="prj01_cost"
+    title="prj01_cost"
+    src="/assets/img/prj01_cost.png"
     width="800px" />
 </p>
 
@@ -259,10 +259,6 @@ B_{G} & 0 \\
 \delta f \\
 \delta{\dot{q}}_{j}
 \end{bmatrix}$$
-
-If task dynamics are not considered:
-
-$$\begin{bmatrix} \delta \dot{h}_{com} \\ \delta \dot{q}_b \\ \delta \dot{q}_j \end{bmatrix} = \begin{bmatrix} 0 & 0 & A_G \\ A_b^{-1} & -A_b^{-1}\frac{dh}{dq} & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} \delta h_{com} \\ \delta q_b \\ \delta q_j \end{bmatrix} + \begin{bmatrix} B_G & 0 \\ 0 & -A_b^{-1}A_j \\ 0 & I \end{bmatrix} \begin{bmatrix} \delta f \\ \delta \dot{q}_j \end{bmatrix}$$
 
 $$\delta \dot{x}_F = A_F \delta x_F + B_F \delta u$$
 
