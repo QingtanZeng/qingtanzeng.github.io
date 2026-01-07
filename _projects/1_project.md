@@ -64,7 +64,7 @@ to complete upper limb manipulation tasks.
 
 Other Variables: These include contact point location $p_{ci}(q)$, CoM position $p_{com}(q)$, floating base speed $v_b = [lv_{IB}, av_{IB}]$ , and contact speeds $v_{ci}(v)$ where $v = [v_b, v_j] = [\dot{q}_b, \dot{q}_j]$ .
 
-Note on Floating Base Speed: Whole-body motion planning does not incorporate floating base speed $v_b$ as a state. Instead of using it as a control input, the nonlinear relationship is directly modeled with the first-order derivative $v_b$ and $(h_{com}, q_j)$25. Therefore, when considering the first-order linearization of contact point velocity $v_{ci}(v)$ relative to $\delta(v_b, v_j)$, the differential chain rule is needed to indirectly obtain the Jacobian coefficient relative to $\delta(h_{com}, q_j)$
+Note on Floating Base Speed: Whole-body motion planning does not incorporate floating base speed $v_b$ as a state. Instead of using it as a control input, the nonlinear relationship is directly modeled with the first-order derivative $v_b$ and $[h_{com}, q_j]$ . Therefore, when considering the first-order linearization of contact point velocity $v_{ci}(v)$ relative to $\delta(v_b, v_j)$, the differential chain rule is needed to indirectly obtain the Jacobian coefficient relative to $\delta(h_{com}, q_j)$
 
 ##### 2.1.1 CoM Dynamics
 
@@ -79,7 +79,7 @@ momentum. They neglect the robot's internal pose and velocity, focusing
 only on the external force state.
 $r_{c_{i}} = p_{c_{i}}(q) - p_{com}(q)$, the location of the contact
 point and CoM are nonlinear relationship with
-$q = [ q_{b},q_{j} ]$described by the SE(3)
+$q = [ q_{b} , q_{j} ]$described by the SE(3)
 transformation.
 
 ##### 2.1.2 Whole-body kinematics
@@ -127,7 +127,7 @@ dynamic balance (foot contact/terminal state), and actuator limits (mechanical/m
 <p align="center">
 <img alt="prj01_constraints"
     title="prj01_constraints"
-    src="../assets/img/prj01_constraints.png"
+    src="/assets/img/prj01_constraints.png"
     width="800px" />
 </p>
 
@@ -139,7 +139,7 @@ penalize deviation from the default pose, and optimize impact/execution costs.
 <p align="center">
 <img alt="prj01_constraints"
     title="prj01_constraints"
-    src="../assets/img/prj01_constraints.png"
+    src="/assets/img/prj01_constraints.png"
     width="800px" />
 </p>
 
@@ -226,23 +226,9 @@ A_{b}^{- 1} & - A_{b}^{- 1}dhdq\
 
 Considering only relevant states and control inputs, the linearized state equation is:
 
-$$\begin{bmatrix} \delta \dot{q}_t \\ \delta \dot{v}_t \end{bmatrix} = \begin{bmatrix} 0 & I \\ \frac{\partial -M_t^{-1}b_t}{\partial q_t} & \frac{\partial -M_t^{-1}b_t}{\partial v_t} \end{bmatrix} \begin{bmatrix} \delta q_t \\ \delta v_t \end{bmatrix} + \begin{bmatrix} 0 \\ -M_t^{-1}J_t^T \end{bmatrix} \delta f_h$$
+$$\begin{bmatrix} \delta \dot{q}_t \\ \delta \dot{v}_t \end{bmatrix} = \begin{bmatrix} 0 & I \\ \frac{\partial (-M_t^{-1}b_t)}{\partial q_t} & \frac{\partial (-M_t^{-1}b_t)}{\partial v_t} \end{bmatrix} \begin{bmatrix} \delta q_t \\ \delta v_t \end{bmatrix} + \begin{bmatrix} 0 \\ -M_t^{-1}J_t^T \end{bmatrix} \delta f_h$$
 
 This forms the system $\dot{x}_t = A_T \delta x_t + B_T \delta f_h$.
-
-$${\begin{bmatrix}
-\delta{\dot{q}}_{t} \\
-\delta{\dot{v}}_{t}
-\end{bmatrix} = \begin{bmatrix}
-0 & I \\
-\frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial q_{t}}\  & \frac{\partial\left( - M_{t}^{- 1}b_{t} \right)}{\partial v_{t}}\ 
-\end{bmatrix}$$
-
-$$\begin{bmatrix}
-\delta q_{t} \\
-\delta v_{t}
-\end{bmatrix} + \left\lbrack - M_{t}^{- 1}J_{t}^{T} \right\rbrack\left\lbrack \delta f_{h} \right\rbrack
-}{{\dot{x}}_{t} = A_{T}\delta\left( x_{t} \right) + B_{T}\delta\left( f_{h} \right)}$$
 
 ##### 3.1.4 Dynamics Transcription Summary
 
@@ -287,7 +273,7 @@ Considering manipulation task dynamics:
 <p align="center">
 <img alt="prj01_fomula314"
     title="prj01_fomula314"
-    src="../assets/img/prj01_fomula314.png"
+    src="/assets/img/prj01_fomula314.png"
     width="400px" />
 </p>
 
@@ -317,7 +303,7 @@ maximum size is ideal for loco-manipulation tasks, where all constraints
 and objectives are pre-modeled, then selectively activated by specific
 problem or states.
 
-Refer directly to <Computational Trajectory Generation> and
+Refer directly to \<Computational Trajectory Generation\> and
 [**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl)[5].
 
 ## V. Reference
