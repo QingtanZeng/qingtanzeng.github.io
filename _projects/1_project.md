@@ -2,8 +2,8 @@
 layout: page
 title: Computational Loco-Manipulation of Humanoid Robots
 description: C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS
-img: assets/img/12.jpg
-importance: 1
+img: assets/img/CLocomani.png
+importance: 2
 category: work
 related_publications: false
 ---
@@ -24,6 +24,13 @@ performs automatic differentiation on FLM**, which would lead to
 **increased computational complexity and larger tape size** from CppAD,
 due to the mixing of matrix inversions, CMM recursive algorithm and CoM
 momentum's partial derivative.
+
+<p align="center">
+<img alt="CLocomani"
+    title="CLocomani"
+    src="../assets/img/CLocomani.png"
+    width="800px" />
+</p>
 
 ## II Model of Full Loco-Manipulation Model
 
