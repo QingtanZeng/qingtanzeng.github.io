@@ -24,7 +24,7 @@ Prof. B. Açıkmeşe et al. from ACL, University of Washington \[1\].
 <p align="center">
 <img alt="Proj02_image1.png"
     title="Proj02_image1.png"
-    src="../assets/img/Proj02_image1.png"
+    src="/assets/img/Proj02_image1.png"
     width="800px" />
 </p>
 
@@ -41,19 +41,17 @@ ii. **动力学线性化、离散化和归一化Linearize, discretize and normal
 
 iii. **约束近似Lossless convexify or approximate constraints**
 
-通过松弛变量或等价变化，可以无损凸化特定类型的状态和输入约束，如喷嘴指向和幅值约束；
-
+通过松弛变量或等价变化，可以无损凸化特定类型的状态和输入约束，如喷嘴指向和幅值约束；\
 对于其他非线性约束，则可以采用一阶线性近似、正定Hessian的二阶近似或其他凸锥函数。
 
 iv. **成本近似Quadratic or linear approximate cost**
 
-人工设计的成本项通常定义为状态和控制输入的L1-norm或其绝对值，如剩余质量；或L2-norm，如对角正定矩阵R定义的控制输入的二次成本项$u^{T}Ru$；
-
-对于追踪任务，通常定义为$||x - x_{ref}||$即L2-distance。
+人工设计的成本项通常定义为状态和控制输入的L1-norm或其绝对值，如剩余质量；或L2-norm，如对角正定矩阵R定义的控制输入的二次成本项$u^{T}Ru$；\
+对于追踪任务，通常定义为$\|x - x_{ref}\|$即L2-distance。
 
 v.  **转录为子问题Transcription to subproblem**
 
-针对Transcription过程中的Artificial Unboundedness(无界) and
+针对Transcription过程中的Artificial Unboundedness(无界) 和
 Infeasibility(不可行)，可以分别采用Virtual Control(虚拟控制)和Trust
 Region(信赖域)来解决。\
 随后所有Parsed cost, dynamics, constraints,
@@ -75,13 +73,11 @@ vii. **收敛准则Stopping criteria**
 
 若非线性系统动力学为
 
-$$\begin{array}{r}
-\dot{x}(t) = f\left( t,\ x(t),u(t) \right),\ t \in \left\lbrack 0,t_{f} \right)\#(1)
-\end{array}$$
+$$\dot{x}(t) = f\left( t,\ x(t),u(t) \right),\ t \in \left( 0,t_{f} \right)$$
 
-为了实现对轨迹总时间$t_{f}$的优化，采用Time-Dilation(时间归一化)即时间区间归一化到\[0,
-1)的建模策略：定义可逆线性变换
-$\tau:\left\lbrack 0,t_{f} \right) \rightarrow \lbrack 0,1)$，\
+为了实现对轨迹总时间$t_{f}$的优化，采用Time-Dilation(时间归一化)即时间区间归一化到[0,1)的建模策略：定义可逆线性变换
+
+$$\tau:\left\lbrack 0,t_{f} \right) \rightarrow \lbrack 0,1)$$
 $$\tau(t) = \frac{t}{t_{f}},\ t \in \lbrack 0,\ t_{f})$$
 
 在自由终时最优控制问题中，将$t_{f}$视为可变参数$s_{i}$，则$t(\tau) = s_{i}\tau,\ \tau \in \lbrack 0,1)$；因此，时间归一化的系统动力学方程为
@@ -97,10 +93,13 @@ $$\dot{x}(\tau) = F(\tau,x(\tau),u(\tau),s)$$
 在任意给定的参考轨迹$(\overline{x}(\tau),\overline{u}(\tau),\overline{s})$附近，对时变非线性微分方程组进行一阶泰勒展开：
 
 $$\delta\dot{x}(\tau) \approx A(\tau)\delta x(\tau) + B(\tau)\delta u(\tau) + S(\tau)\delta s$$
+
 或展开为
 
 $$\dot{x}(\tau) \approx A(\tau)x(\tau) + B(\tau)u(\tau) + S(\tau)s + d(\tau)$$
+
 where\
+
 $$A(\tau) ≔ \nabla_{x}F(\tau,\overline{x}(\tau),\overline{u}(\tau),\overline{s})$$
 
 $$B(\tau) ≔ \nabla_{u}F\left( \tau,\overline{x}(\tau),\overline{u}(\tau),\overline{s} \right)$$
@@ -131,47 +130,68 @@ LDLT加速KKT矩阵分解；但是后文提到的固定稀疏模式的求解器�
 离散点之间的线性仿射的控制输入定义为
 
 $$u(\tau) = \sigma_{k}^{-}(\tau)u_{k} + \sigma_{k}^{+}(\tau)u_{k + 1},\ \tau \in \left\lbrack \tau_{k},\tau_{k + 1} \right)$$
+
 where\
+
 $$\sigma_{k}^{-}(\tau) = \frac{\tau_{k + 1} - \tau}{\tau_{k + 1} - \tau_{k}},\ \sigma_{k}^{+}(\tau) = \frac{\tau - \tau_{k}}{\tau_{k + 1} - \tau_{k}},\ k = 1:N - 1$$
 代入，线性化的LTV动力系统的表达式为\
+
 $$\delta\dot{x}(\tau) \approx A(\tau)\delta x(\tau) + B(\tau)\sigma_{k}^{-}(\tau){\delta u}_{k} + B(\tau)\sigma_{k}^{+}(\tau){\delta u}_{k + 1} + S(\tau)\delta s$$
-则时间区间$\lbrack\tau_{k},\ \tau)$内的状态转移方程为
+
+则时间区间$(\tau_{k},\ \tau)$内的状态转移方程为
 
 $$\Delta x(\tau) = \Phi\left( \tau,\tau_{k} \right)\Delta x\left( \tau_{k} \right) + \int_{\tau_{k}}^{\tau}{\Phi(\tau,\zeta)\left\{ B(\zeta)\sigma_{k}^{-}(\zeta){\Delta u}_{k} + B(\zeta)\sigma_{k}^{+}(\zeta){\Delta u}_{k + 1} + S(\tau)\Delta s \right\} d\zeta}$$
+
 式中，$\Delta\square_{k} = \square_{k} - \overline{\square}$，与$\delta$等价但代表优化过程中更大幅度的变量改变；$\Phi\left( \tau,\tau_{k} \right)$是状态转移矩阵，其遵循以下公式:
 
 $${\Phi(\tau,\tau) = I,\ \Phi^{- 1}\left( \tau,\tau_{k} \right) = \Phi\left( \tau_{k},\tau \right)
 }{\frac{\partial}{\partial\tau}\Phi\left( \tau,\tau_{k} \right) = A(\tau)\Phi\left( \tau,\tau_{k} \right)
-}$$在时间区间$\lbrack\tau_{k},\ \tau_{k + 1}^{-})$内对进行积分，可以获得线性仿射形式的状态空间方程
+}$$
+
+在时间区间$(\tau_{k},\ \tau_{k + 1}^{-})$内对进行积分，可以获得线性仿射形式的状态空间方程
 
 $$\Delta x\left( \tau_{k + 1}^{-} \right) = A_{k}\Delta x_{k} + B_{k}^{-}{\Delta u}_{k} + B_{k}^{+}{\Delta u}_{k + 1} + S_{k}\Delta s$$
+
 所有函数值、线性离散矩阵的积分和导数如下\
+
 $$\overline{x}\left( \tau_{k + 1}^{-} \right) = \overline{x}\left( \tau_{k} \right) + \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{F\left( \tau,\overline{x}(\tau),\overline{u}(\tau),\overline{s} \right)d\tau},\ \frac{d}{d\tau}\overline{x}(\tau) = F\left( \tau,\overline{x}(\tau),\overline{u}(\tau),\overline{s} \right),\ \overline{x}\left( \tau_{k} \right) = \overline{x}\left( \tau_{k} \right)$$
 
 $${A_{k} = \Phi_{k} = I + \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi\left( \tau,\tau_{k} \right)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi\left( \tau,\tau_{k} \right) = A(\tau)\Phi\left( \tau,\tau_{k} \right),\ \Phi\left( \tau_{k},\tau_{k} \right) = \mathbf{I}
-}{B_{k}^{-} = \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi_{B}^{-}(\tau) + B(\tau)\sigma_{k}^{-}(\tau)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi_{B}^{-}(\tau) = A(\tau)\Phi_{B}^{-}(\tau) + B(\tau)\sigma_{k}^{-}(\tau),\ \Phi_{B}^{-}\left( \tau_{k} \right) = \mathbf{0}
-}{B_{k}^{+} = \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi_{B}^{+}(\tau) + B(\tau)\sigma_{k}^{+}(\tau)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi_{B}^{+}(\tau) = A(\tau)\Phi_{B}^{+}(\tau) + B(\tau)\sigma_{k}^{+}(\tau),\ \Phi_{B}^{+}\left( \tau_{k} \right) = \mathbf{0}}$$
+}$$
+
+$${B_{k}^{-} = \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi_{B}^{-}(\tau) + B(\tau)\sigma_{k}^{-}(\tau)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi_{B}^{-}(\tau) = A(\tau)\Phi_{B}^{-}(\tau) + B(\tau)\sigma_{k}^{-}(\tau),\ \Phi_{B}^{-}\left( \tau_{k} \right) = \mathbf{0}
+}$$
+
+$${B_{k}^{+} = \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi_{B}^{+}(\tau) + B(\tau)\sigma_{k}^{+}(\tau)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi_{B}^{+}(\tau) = A(\tau)\Phi_{B}^{+}(\tau) + B(\tau)\sigma_{k}^{+}(\tau),\ \Phi_{B}^{+}\left( \tau_{k} \right) = \mathbf{0}}$$
 
 $$S_{k} = \int_{\tau_{k}}^{\tau_{k + 1}^{-}}{A(\tau)\Phi_{S}(\tau) + S(\tau)d\tau}:\ \ \ \ \ \frac{d}{d\tau}\Phi_{S}(\tau) = A(\tau)\Phi_{S}(\tau) + S(\tau),\ S(\tau_{k}) = \mathbf{0}$$
 
-然而由于线性化误差、离散化的数值积分误差、约束违反，会导致相邻区间边界上，参考状态$\overline{x}(\tau_{k + 1})$、$F(\tau)$积分前推预测值$\overline{x}(\tau_{k + 1}^{-})$、实时优化变量$x(\tau_{k + 1})$并不一致。其中，子问题优化收敛后的轨迹，即参考状态$\overline{x}(\tau_{k + 1})$和前推预测值$\overline{x}(\tau_{k + 1}^{-})$的误差称为$defect$:\
+然而由于线性化误差、离散化的数值积分误差、约束违反，会导致相邻区间边界上，参考状态$\overline{x}(\tau_{k + 1})$、$F(\tau)$积分前推预测值$\overline{x}(\tau_{k + 1}^{-})$、实时优化变量$x(\tau_{k + 1})$并不一致。其中，子问题优化收敛后的轨迹，即参考状态$\overline{x}(\tau_{k + 1})$和前推预测值$\overline{x}(\tau_{k + 1}^{-})$的误差称为$defect$:
 $$\Delta_{k} = \left| \left| \overline{x}\left( \tau_{k + 1} \right) - \overline{x}\left( \tau_{k + 1}^{-} \right) \right| \right|,\ k = 1,\ldots,N - 1$$
 若收敛后的轨迹是可行的(Feasible)，即状态、输入、参数轨迹满足非线性动力学，则defects应当收敛至0。因此，defects可以作为可行轨迹的充分必要条件。
 
-![](./assets/media/image2.png){width="2.845715223097113in"
-height="1.6912226596675415in"}
+<p align="center">
+<img alt="Defects"
+    title="Defects"
+    src="/assets/img/Proj02_image2.png"
+    width="800px" />
+</p>
 
 需要注意的是，公式中$\Delta x\left( \tau_{k + 1}^{-} \right) = x\left( \tau_{k + 1}^{-} \right) - \overline{x}\left( \tau_{k + 1}^{-} \right)$，是与预测值的差值而非参考状态$\overline{x}(\tau_{k + 1})$。尽管在部分MPC场景中可直接使用，但对于长时间轨迹生成，离散化方程展开为
 
 $${x\left( \tau_{k + 1}^{-} \right) - \overline{x}\left( \tau_{k + 1}^{-} \right) = A_{k}x\left( \tau_{k} \right) + B_{k}^{-}u_{k} + B_{k}^{+}u_{k + 1} + S_{k}s - \left( A_{k}{\overline{x}}_{k} + B_{k}^{-}{\overline{u}}_{k} + B_{k}^{+}{\overline{u}}_{k + 1} + S_{k}\overline{s} \right)
 }{x\left( \tau_{k + 1}^{-} \right) = A_{k}x\left( \tau_{k} \right) + B_{k}^{-}u_{k} + B_{k}^{+}u_{k + 1} + S_{k}s + \lbrack\overline{x}\left( \tau_{k + 1}^{-} \right) - \left( A_{k}{\overline{x}}_{k} + B_{k}^{-}{\overline{u}}_{k} + B_{k}^{+}{\overline{u}}_{k + 1} + S_{k}\overline{s} \right)\rbrack
-}$$令$d_{k} = \lbrack\overline{x}\left( \tau_{k + 1}^{-} \right) - \left( A_{k}{\overline{x}}_{k} + B_{k}^{-}{\overline{u}}_{k} + B_{k}^{+}{\overline{u}}_{k + 1} + S_{k}\overline{s} \right)\rbrack$，且实时优化变量$x(\tau_{k + 1})$和$x(\tau_{k})$之间应满足上式，即
-$x\left( \tau_{k + 1}^{-} \right) ≔ \ x(\tau_{k + 1})$，则展开后的线性离散化的动力学方程如下\
+}$$
+
+令$d_{k} = \lbrack\overline{x}\left( \tau_{k + 1}^{-} \right) - \left( A_{k}{\overline{x}}_{k} + B_{k}^{-}{\overline{u}}_{k} + B_{k}^{+}{\overline{u}}_{k + 1} + S_{k}\overline{s} \right)\rbrack$，且实时优化变量$x(\tau_{k + 1})$和$x(\tau_{k})$之间应满足上式，即
+$x\left( \tau_{k + 1}^{-} \right) ≔ \ x(\tau_{k + 1})$，则展开后的线性离散化的动力学方程如下,
+
 $$x\left( \tau_{k + 1} \right) = A_{k}x\left( \tau_{k} \right) + B_{k}^{-}u_{k} + B_{k}^{+}u_{k + 1} + S_{k}s + d_{k}$$
 
 ##### C. Propagation 数值积分
 
-为获得非线性动力学和LTV精确离散方程的函数值和矩阵，需要采用数值积分的方式向前递推获得。由于f分别对{$\overline{x}(\tau),\ \Phi\left( \tau,\tau_{k} \right),\ \Phi_{B}^{-}(\tau),\Phi_{B}^{+}(\tau),\Phi_{S}(\tau)$}进行积分离散，因此可以将5个变量和积分公式向量化为1维数组，其状态值、微分值和初始值如下\
+为获得非线性动力学和LTV精确离散方程的函数值和矩阵，需要采用数值积分的方式向前递推获得。由于f分别对{$\overline{x}(\tau),\ \Phi\left( \tau,\tau_{k} \right),\ \Phi_{B}^{-}(\tau),\Phi_{B}^{+}(\tau),\Phi_{S}(\tau)$}进行积分离散，因此可以将5个变量和积分公式向量化为1维数组，其状态值、微分值和初始值如下,
+
 $$P(\tau) = \begin{bmatrix}
 \overline{x}(\tau) \\
 \Phi\left( \tau,\tau_{k} \right) \\
@@ -198,7 +218,7 @@ A(\tau)\Phi_{S}(\tau) + S(\tau)
 \end{matrix}
 \end{bmatrix}$$
 
-由于$N - 1$离散点之间的动力学约束并不互相依赖，因此可以将propagation任务进行多核并行计算。
+由于$N-1$离散点之间的动力学约束并不互相依赖，因此可以将propagation任务进行多核并行计算。
 
 ### 2.3 约束线性化
 
@@ -209,14 +229,16 @@ $$h(x,u,p) \leq 0$$
 对于与与状态和控制相关的非凸不等式约束,
 则可以采用一阶线性不等式近似。若其二阶Hessian矩阵$\ \nabla^{2}h \geq 0\ $，则可采用二阶锥近似；如果二阶近似可大幅提高近似精度，且计算廉价，则推荐使用。
 
-一阶近似的一般形式推导如下，在参考轨迹附近一阶展开
+一阶近似的一般形式推导如下，在参考轨迹附近一阶展开, 
 
 $${h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right) + \delta h = h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right) + \frac{\partial h}{\partial x}\Delta x + \frac{\partial h}{\partial u}\Delta u + \frac{\partial h}{\partial p}\Delta p = h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right) + \nabla h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right)\begin{bmatrix}
 \Delta x \\
 \Delta u \\
 \Delta p
 \end{bmatrix} \leq 0
-}{\nabla h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right)\begin{bmatrix}
+}$$
+
+$${\nabla h\left( {\overline{x}}_{k},{\overline{u}}_{k},\overline{p} \right)\begin{bmatrix}
 x_{k} \\
 u_{k} \\
 p
@@ -225,7 +247,8 @@ p
 {\overline{u}}_{k} \\
 \overline{p}
 \end{bmatrix} \right)
-}{\nabla{\overline{h}}_{k} \cdot x \leq - \overline{h}}$$
+}$$
+$${\nabla{\overline{h}}_{k} \cdot x \leq - \overline{h}}$$
 
 需要注意的是，离散优化问题仅在离散节点处满足硬约束，尽管FOH可大幅减少节点区间内可能的约束违反，但仍然可能存在，该现象称为Constraint
 Clipping。因此，在节点上检查可行性是评估路径约束下可行性的必要条件，但并非充分条件。相比之下，基于defect的动力学轨迹可行性评估则是必要且充分的。
@@ -237,69 +260,12 @@ L2-Norm和L2-Distance，以实现轨迹跟踪、成本优化、正则化等目�
 
 参考\<\>。
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Dynamics Propagation                                                                                                                                   |
-+========================================================================================================================================================+
-| **Input:** Reference trajectory ($\overline{x},\ \overline{u},\overline{s}$), *flag.feasible(true),* $N_{sub}$                                         |
-|                                                                                                                                                        |
-| **Output:** updated ***A, b*** of subproblem, *flag.feasible*                                                                                          |
-+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 1.  **function** *dynprop* ($\overline{x},\ \overline{u},\overline{s}$)                                                                                |
-|                                                                                                                                                        |
-| 2.  **Parallel for** $\mathbf{k} = 1,\ldots,N - 1$ **do**                                                                                              |
-|                                                                                                                                                        |
-| 3.  $P_{0} = \lbrack\overline{x}\left( \tau_{k} \right),\ \mathbf{I,\ 0,0,0}\rbrack$ //reset initial values and matrix                                 |
-|                                                                                                                                                        |
-| 4.  $h = (\tau_{k + 1} - \tau_{k})/N_{sub}$ //setup step size in rk4                                                                                   |
-|                                                                                                                                                        |
-| 5.  **Call rk4**$(P_{0},\ h,\ \tau_{k + 1},jacob)$ to update $P$                                                                                       |
-|                                                                                                                                                        |
-| 6.  retrieve ${\overline{x}\left( \tau_{k + 1}^{-} \right),\ A}_{k},\ B_{k}^{-},\ B_{k}^{+},\ S_{k}$ from $P$                                          |
-|                                                                                                                                                        |
-| 7.  get $d_{k}$                                                                                                                                        |
-|                                                                                                                                                        |
-| 8.  get $\Delta_{k} = \left| \left| \overline{x}\left( \tau_{k + 1} \right) - \overline{x}\left( \tau_{k + 1}^{-} \right) \right| \right|$ //calculate |
-|     defects                                                                                                                                            |
-|                                                                                                                                                        |
-| 9.  **If** $\Delta_{k}.max > \epsilon_{feas}$ **then**                                                                                                 |
-|                                                                                                                                                        |
-| 10. ***flag.feasible** = false*                                                                                                                        |
-|                                                                                                                                                        |
-| 11. **end If**                                                                                                                                         |
-|                                                                                                                                                        |
-| 12. fill ***A*** with $A_{k},\ B_{k}^{-},\ B_{k}^{+},\ S_{k}$ //update data in subproblem                                                              |
-|                                                                                                                                                        |
-| 13. fill ***b*** with $d_{k}$                                                                                                                          |
-|                                                                                                                                                        |
-| 14. **end Parallel for**                                                                                                                               |
-|                                                                                                                                                        |
-| 15. **return** *flag.feasible*                                                                                                                         |
-|                                                                                                                                                        |
-| 16. **end function**                                                                                                                                   |
-+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                        |
-+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 1.  **function** *jacob* $\mathbf{(}\tau,\ P\mathbf{)}$                                                                                                |
-|                                                                                                                                                        |
-| 2.  retrieve $\Phi\left( \tau,\tau_{k} \right),\ \Phi_{B}^{-}(\tau),\ \Phi_{B}^{+}(\tau),\ \Phi_{S}(\tau)$ from $P$                                    |
-|                                                                                                                                                        |
-| 3.  get $\sigma_{k}^{-}(\tau)$ and $\sigma_{k}^{+}(\tau)$                                                                                              |
-|                                                                                                                                                        |
-| 4.  $\dot{\overline{x}}(\tau) = F\left( \tau,\overline{x}(\tau),\overline{u}(\tau),\overline{s} \right)$                                               |
-|                                                                                                                                                        |
-| 5.  $\dot{\Phi}\left( \tau,\tau_{k} \right) = A(\tau)\Phi\left( \tau,\tau_{k} \right)$                                                                 |
-|                                                                                                                                                        |
-| 6.  ${\dot{\Phi}}_{B}^{-}(\tau) = A(\tau)\Phi_{B}^{-}(\tau) + B(\tau)\sigma_{k}^{-}(\tau)$                                                             |
-|                                                                                                                                                        |
-| 7.  ${\dot{\Phi}}_{B}^{+}(\tau) = A(\tau)\Phi_{B}^{+}(\tau) + B(\tau)\sigma_{k}^{+}(\tau)$                                                             |
-|                                                                                                                                                        |
-| 8.  ${\dot{\Phi}}_{S}(\tau) = A(\tau)\Phi_{S}(\tau) + S(\tau)$                                                                                         |
-|                                                                                                                                                        |
-| 9.  **return**                                                                                                                                         |
-|     $\dot{\overline{x}}(\tau),\ \dot{\Phi}\left( \tau,\tau_{k} \right),\ {\dot{\Phi}}_{B}^{-}(\tau),{\dot{\Phi}}_{B}^{+}(\tau),{\dot{\Phi}}_{S}(\tau)$ |
-|                                                                                                                                                        |
-| 10. **end function**                                                                                                                                   |
-+--------------------------------------------------------------------------------------------------------------------------------------------------------+
+<p align="center">
+<img alt="Proj02_scp_transcription"
+    title="Proj02_scp_transcription"
+    src="/assets/img/Proj02_scp_transcription.jpg"
+    width="800px" />
+</p>
 
 ### 2.5 Artificial Unboundedness and Infeasibility
 
@@ -311,10 +277,13 @@ L2-Norm和L2-Distance，以实现轨迹跟踪、成本优化、正则化等目�
 
 $${\alpha_{x}|x_{k} - {\overline{x}}_{k}| + \alpha_{u}|u_{k} - {\overline{u}}_{k}| \leq \eta_{k},\ \ \ k = 1,\ldots,N
 }{\alpha_{p}\left| p - \overline{p} \right| \leq \eta_{p}
-}$$式中采用二次双范数平方限制偏离距离，$\ \eta \in R_{+}^{N},\ \eta_{p} \in R_{+}\ $分别为状态输入和可变参数的信赖域半径，需作为优化变量参与L-1
+}$$
+
+式中采用二次双范数平方限制偏离距离，$\ \eta \in R_{+}^{N},\ \eta_{p} \in R_{+}\ $分别为状态输入和可变参数的信赖域半径，需作为优化变量参与L-1
 Norm目标函数中，以鼓励SCP收敛过程中将半径推进至0，
 
 $$J_{tr} = w_{tr}^{T}\eta + w_{tr,p}\eta_{p}$$
+
 式中$\ w_{tr} \in R_{+}^{N},\ w_{p} \in R_{+}\ $分别为信赖域半径的惩罚权重。
 
 尽管惩罚权重可以手工设计标定，但在SCP收敛过程中可被设计为依据动力学轨迹可行性的动态更新，借用动力学轨迹propagation获得的defect，定义
@@ -323,6 +292,7 @@ $$w_{tr,k} = \left\{ \begin{matrix}
 1/\Delta_{k}\ ,\ \ \ \Delta_{k} > \Delta_{\min} \\
 1/\Delta_{\min}\ ,\ \ \ \Delta_{k} < \Delta_{\min}
 \end{matrix} \right.\ $$
+
 式中$\ \Delta_{\min}\ $为L1-Norm权重提供一个数值上界，以保持合理的缩放尺寸并避免条件数过差带来的数值问题。动态更新的权重鼓励存在较大误差的节点变量有更大的步长，而惩罚已接近收敛的节点变量尽量保持不动，但依然允许所有优化变量在信赖域内同时优化调整。在迭代过程中，Solver内环将硬约束残差逐步缩减至0，SCP外环则引导信赖域半径逐步收敛至0，从而获得可行轨迹，并避免人为无界问题。
 
 #### 2.5.2 Artificial Infeasibility: Virtual Control
@@ -356,7 +326,9 @@ $${\min_{x = \left( X,U,p,V,\eta,\eta_{p} \right)}\left( x^{T}Px + c^{T}x \right
 }{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A_{0}x_{1} + E_{0}p + r_{0} + v_{0} = 0,\ \ \ A_{N}x_{N} + E_{N}p + r_{N} + v_{N} = 0,\ 
 }{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_{x}|x_{k} - {\overline{x}}_{k}| + \alpha_{u}|u_{k} - {\overline{u}}_{k}| \leq \eta_{k},\ \ \ k = 1,\ldots,N
 }{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \alpha_{p}\left| p - \overline{p} \right| \leq \eta_{p}
-}$$将$\ N\ $个节点的离散子问题装入下列标准锥问题形式中，其中约束仅有仿射等式、非负锥和二阶锥，以实现real-time求解，
+}$$
+
+将$\ N\ $个节点的离散子问题装入下列标准锥问题形式中，其中约束仅有仿射等式、非负锥和二阶锥，以实现real-time求解，
 
 $${\min{\ \ \ \ \ \left( \frac{1}{2} \right)x^{T}Px + w^{T}x}
 }{s.t.\ \ \ \ \ \ \ Ax + s = b
@@ -387,22 +359,29 @@ $$x^{T}Px + w^{T}x = x^{T}\left( S^{T}PS \right)x + (2c^{T}P + w^{T})Sx$$
 通常一般形式的二阶锥约束可以如下处理，假定仅有状态相关的约束，
 
 $$\left| Ax_{k} + c \right| \leq g^{T}x_{k} + d$$
+
 式中$\ A \in R^{d \times n_{x}},\ c \in R^{d},\ g \in R^{n_{x}},d \in R\ $，假定二阶锥参数不随状态变化。引入辅助变量$\ \mu_{k} \in R^{d},\ \sigma_{k} \in R_{+}\ $，
 
 $$\mu_{k} = Ax_{k} + c,\ \ \ \sigma_{k} = g^{T}x_{k} + d \rightarrow \ \begin{bmatrix}
 \sigma_{k} \\
 \mu_{k}
 \end{bmatrix} \in C_{soc,d + 1}$$
+
 因此一般形式的二阶锥约束被转化为仿射等式约束和标准二阶锥约束，将N个二阶锥约束集中表达，
 
-$${\chi ≔ \left( \sigma_{1},\mu_{1},\sigma_{2},\mu_{2},\ldots\sigma_{N},\mu_{N} \right) \in R^{N(d + 1)}
-}{- \left( I_{N}\bigotimes A \right)x + \left( I_{N}\bigotimes\left\lbrack 0\ \ I_{d} \right\rbrack \right)\chi = 1_{N}\bigotimes c
-}{- \left( I_{N}\bigotimes g^{T} \right)x + \left( I_{N}\bigotimes\left\lbrack 1\ \ 0_{1 \times d} \right\rbrack \right)\chi = d \cdot 1_{N}
-}{(\sigma_{k},\mu_{k}) \in C_{soc,d + 1}
-}$$式中$\ \bigotimes\ $为Kronecker product.
+$${\chi ≔ \left( \sigma_{1},\mu_{1},\sigma_{2},\mu_{2},\ldots\sigma_{N},\mu_{N} \right) \in R^{N(d + 1)}}$$
+$${- \left( I_{N}\bigotimes A \right)x + \left( I_{N}\bigotimes\left\lbrack 0\ \ I_{d} \right\rbrack \right)\chi = 1_{N}\bigotimes c}$$
+$${- \left( I_{N}\bigotimes g^{T} \right)x + \left( I_{N}\bigotimes\left\lbrack 1\ \ 0_{1 \times d} \right\rbrack \right)\chi = d \cdot 1_{N}}$$
+$${(\sigma_{k},\mu_{k}) \in C_{soc,d + 1}}$$
 
-![](./assets/media/image3.jpeg){width="7.942197069116361in"
-height="4.177099737532808in"}
+式中$\ \bigotimes\ $为Kronecker product.
+
+<p align="center">
+<img alt="hand-parser problem"
+    title="hand-parser problem"
+    src="/assets/img/Proj02_image3.jpeg"
+    width="800px" />
+</p>
 
 ## IV. Reference
 

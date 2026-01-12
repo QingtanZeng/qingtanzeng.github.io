@@ -28,7 +28,7 @@ momentum's partial derivative.
 <p align="center">
 <img alt="CLocomani"
     title="CLocomani"
-    src="../assets/img/CLocomani.png"
+    src="/assets/img/CLocomani.png"
     width="800px" />
 </p>
 
