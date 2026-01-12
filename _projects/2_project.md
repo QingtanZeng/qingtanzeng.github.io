@@ -383,6 +383,15 @@ $${(\sigma_{k},\mu_{k}) \in C_{soc,d + 1}}$$
     width="800px" />
 </p>
 
+下图为Linear SOCP标准形式问题的稀疏结构，图中灰色为NaN，白色为0.0，蓝色和紫色分别代表+1/-1，蓝色和红色分别代表+x/-x。
+
+<p align="center">
+<img alt="Sparse Matrix Visualization"
+    title="Sparse Matrix Visualization"
+    src="/assets/img/Proj02_trjdb_pgm_init.png"
+    width="800px" />
+</p>
+
 ## IV. Reference
 
 \[1\] Reynolds, T. P. (2020). Computational guidance and control for
