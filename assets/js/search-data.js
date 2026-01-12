@@ -426,9 +426,9 @@ ninja.data = [{
           description: "Sequential Convex Programming for trajectory generation with hand-parser.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/2_project/";
-            },},{id: "projects-project-3-with-very-long-name",
-          title: 'project 3 with very long name',
-          description: "a project that redirects to another website",
+            },},{id: "projects-notes-on-real-time-quadratic-conic-programming",
+          title: 'Notes on Real-time Quadratic Conic Programming',
+          description: "Homogeneous Self-dual Embedding(HSDE) IPM, Homogeneous Embedding(HE) IPM, HE Douglas-Rachford Splitting(DRS)",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
             },},{id: "projects-project-4",
