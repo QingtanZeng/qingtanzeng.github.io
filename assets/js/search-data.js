@@ -421,9 +421,9 @@ ninja.data = [{
           description: "C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
-            },},{id: "projects-project-2",
-          title: 'project 2',
-          description: "a project with a background image and giscus comments",
+            },},{id: "projects-computational-trajectory-generation",
+          title: 'Computational Trajectory Generation',
+          description: "Sequential Convex Programming for trajectory generation with hand-parser.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/2_project/";
             },},{id: "projects-project-3-with-very-long-name",
