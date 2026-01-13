@@ -79,8 +79,12 @@ PWM类调制方式会带来高频载波谐波，直接造成了相关频率的NV
 抖频(Spectrum
 Spread)将单一频率的谐波峰值及能量，通过随机变频的方式抖动到附近的区间内，听觉近似白噪音，可极大减小单一高频噪音的不舒适感。因此抖频相关的设计，如随机数生成、可变粗糙度、分布形式等，需协同物理传递路径和最终需求，协同定义。
 
-![](./assets/media/image2.jpeg){width="3.6233759842519686in"
-height="1.91416447944007in"}
+<p align="center">
+<img alt="Spectrum Spread"
+    title="Spectrum Spread"
+    src="/assets/img/Proj05_image2.png"
+    width="800px" />
+</p>
 
 ## IV. 主动热平衡
 
