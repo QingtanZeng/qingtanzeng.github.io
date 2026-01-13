@@ -4,7 +4,7 @@ title: Inverter Modulation
 author: Qingtan Zeng
 description: Report on Inverter Modulation
 img: assets/img/Proj05_image1.png
-importance: 3
+importance: 5
 category: work
 related_publications: false
 ---

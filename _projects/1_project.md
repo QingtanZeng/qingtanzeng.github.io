@@ -4,7 +4,7 @@ title: Computational Loco-Manipulation of Humanoid Robots
 author: Qingtan Zeng
 description: C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS
 img: assets/img/CLocomani.png
-importance: 2
+importance: 3
 category: work
 related_publications: false
 ---

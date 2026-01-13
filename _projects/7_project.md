@@ -4,7 +4,7 @@ title: Active Discharge
 author: Qingtan Zeng
 description: Report on Active Discharge
 img: assets/img/Proj07_Active Discharge.png
-importance: 3
+importance: 7
 category: work
 related_publications: false
 ---

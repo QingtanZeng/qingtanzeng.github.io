@@ -40,9 +40,21 @@ PMSM control of NEVs' electric drive axle at United Automotive Electronic System
 from 2022 to 2025, where I was officially certified as a Departmental Expert.
 
 
-## Selected Projects
+<br>
+
+## Experience
+
+- **United Automotive Electronic Systems (Bosch)** *Motor Control Software Engineer | Subject Matter Expert* <span style="color: gray; font-size: 0.9em;">2022 – 2025</span>
+
+- **Beijing Institute of Technology (BIT)** *M.Sc. in Mechanical Engineering (NERC-EV)* <span style="color: gray; font-size: 0.9em;">2019 – 2022</span>
+
+- **Jilin University** *B.Eng. in Vehicle Engineering* <span style="color: gray; font-size: 0.9em;">2015 – 2019</span>
+
+<br>
+
+## Projects
 <div class="projects">
-  {% assign selected_projects = site.projects | where_exp: "item", "item.importance <= 4" | sort: "importance" %}
+  {% assign selected_projects = site.projects | sort: "importance" %}
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
       {% for project in selected_projects %}

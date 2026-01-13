@@ -3,7 +3,7 @@ layout: page
 title: Notes on Real-time Quadratic Conic Programming
 description: Homogeneous Self-dual Embedding(HSDE) IPM, Homogeneous Embedding(HE) IPM, HE Douglas-Rachford Splitting(DRS)
 img: assets/img/Proj03_solver01.jpg
-importance: 2
+importance: 4
 category: work
 related_publications: false
 ---
