@@ -40,12 +40,9 @@ PMSM control of NEVs' electric drive axle at United Automotive Electronic System
 from 2022 to 2025, where I was officially certified as a Departmental Expert.
 
 
-<br>
+<br><br><br>
 
 ## Experience
-
-<br><br><br> ## Experience
-
 <div style="margin-bottom: 25px;"> <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (UAES)</div>
     <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2022 – 2025</div>
@@ -69,13 +66,11 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
   <div style="font-style: italic; color: #555;">B.Eng. in Vehicle Engineering</div>
 </div>
 
-<br>
-
 ## Projects
 <div class="projects">
   {% assign selected_projects = site.projects | where: "category", "work" | sort: "importance" %}
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1 row-cols-md-3">
       {% for project in selected_projects %}
         {% include projects.liquid %}
       {% endfor %}
