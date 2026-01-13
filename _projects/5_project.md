@@ -3,13 +3,11 @@ layout: page
 title: Inverter Modulation
 author: Qingtan Zeng
 description: Report on Inverter Modulation
-img: assets/img/.png
+img: assets/img/Proj05_image1.png
 importance: 3
 category: work
 related_publications: false
 ---
-
-# Inverter Modulation
 
 ## I. Introduction {#i.-introduction .标题3z}
 
@@ -82,7 +80,7 @@ Spread)将单一频率的谐波峰值及能量，通过随机变频的方式抖�
 <p align="center">
 <img alt="Spectrum Spread"
     title="Spectrum Spread"
-    src="/assets/img/Proj05_image2.png"
+    src="/assets/img/Proj05_image2.jpeg"
     width="800px" />
 </p>
 

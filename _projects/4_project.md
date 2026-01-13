@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Notes on Constrained Stein Variational Inference for Global Optimization
-description: MultiModal, NonConvex-NonConnected-NonDifferentiable, Hard Constraints, GPU Acceleration.
+title: Notes on Constrained Stein Variational Inference
+description: Constrained Global Optimization through SVI: MultiModal, NonConvex-NonConnected-NonDifferentiable, Hard Constraints, GPU Acceleration.
 img: assets/img/Proj04_Particles.jpg
 importance: 2
 category: work

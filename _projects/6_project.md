@@ -1,80 +1,45 @@
 ---
 layout: page
-title: project 6
-description: a project with no image
-img:
-importance: 4
-category: fun
+title: Inverter Modulation
+author: Qingtan Zeng
+description: Report on Pulse Heating
+img: assets/img/Proj06_Pulseheating.png
+importance: 3
+category: work
+related_publications: false
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+# Pulse Heating in E-Drive
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+## I. Introduction
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+正常电驱电磁控制是形成旋转磁场从而产生扭矩，且产生带有开关纹波的母线直流电流。但是脉冲加热则在静止工况下，利用电池与电机电感之间的能量交换生成交流的母线电流，进而完成在电池内部(内阻)的加热。
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
+<p align="center">
+<img alt="Pulse Heating"
+    title="Pulse Heating"
+    src="/assets/img/Proj06_Pulseheating.png"
+    width="800px" />
+</p>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+尽管原理简单，但需要实现以下设计和功能，以确保安全稳定鲁棒的脉冲加热，
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+1.  **电流波形**:
+    确定对电池内阻升温最高效的电流波形，避免大量热量被耗散在逆变器和电机上；
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+2.  **电流控制器设计:**
+    完全不同于旋转磁场的控制，需依据波形定制化设计电流控制器;
 
-{% raw %}
+3.  **电感饱和:**
+    通常400-800V母线电压会导致很高的$\ dV/dt\ $，因此需在低载波比下稳定控制周期波形，避免电感饱和造成失稳过流；
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
+4.  **转子过热退磁:**
+    交流磁链会导致转子涡流损耗及快速温升，因此需实时估计转子温度并适时保护；
 
-{% endraw %}
+5.  **意外扭矩:** 防止静止加热时出现意外扭矩；
+
+6.  **NVH改善:**
+    由于功能理论上就存在基频相关的谐波，且造成周期径向力冲击，需协同各个环节尽可能降低终端噪音水平至可接受的范围。
+
+7.  **...**.
+
