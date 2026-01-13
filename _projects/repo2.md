@@ -1,7 +1,7 @@
 ---
 layout: page
 title: GOptInfer (Global Optimization As Inference)
-description: Constrained Global Optimization through SVI: MultiModal, NonConvex-NonConnected-NonDifferentiable, Hard Constraints, GPU Acceleration.
+description: Constrained Global Optimization through SVI
 img: assets/img/Proj04_Particles.jpg
 importance: 2
 category: software   # <--- 这里是最关键的，标记为 software

@@ -44,17 +44,36 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
 
 ## Experience
 
-- **United Automotive Electronic Systems (Bosch)** *Motor Control Software Engineer | Subject Matter Expert* <span style="color: gray; font-size: 0.9em;">2022 – 2025</span>
+<br><br><br> ## Experience
 
-- **Beijing Institute of Technology (BIT)** *M.Sc. in Mechanical Engineering (NERC-EV)* <span style="color: gray; font-size: 0.9em;">2019 – 2022</span>
+<div style="margin-bottom: 25px;"> <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (UAES)</div>
+    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2022 – 2025</div>
+  </div>
+  <div style="font-style: italic; color: #555;">Motor Control Software Engineer | Departmental Expert</div>
+</div>
 
-- **Jilin University** *B.Eng. in Vehicle Engineering* <span style="color: gray; font-size: 0.9em;">2015 – 2019</span>
+<div style="margin-bottom: 25px;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div style="font-weight: bold; font-size: 1.1em;">Beijing Institute of Technology (BIT)</div>
+    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2019 – 2022</div>
+  </div>
+  <div style="font-style: italic; color: #555;">M.Sc. in Mechanical Engineering (NERC-EV)</div>
+</div>
+
+<div style="margin-bottom: 25px;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div style="font-weight: bold; font-size: 1.1em;">Jilin University</div>
+    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2015 – 2019</div>
+  </div>
+  <div style="font-style: italic; color: #555;">B.Eng. in Vehicle Engineering</div>
+</div>
 
 <br>
 
 ## Projects
 <div class="projects">
-  {% assign selected_projects = site.projects | sort: "importance" %}
+  {% assign selected_projects = site.projects | where: "category", "work" | sort: "importance" %}
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
       {% for project in selected_projects %}
