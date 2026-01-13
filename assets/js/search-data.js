@@ -431,9 +431,9 @@ ninja.data = [{
           description: "Homogeneous Self-dual Embedding(HSDE) IPM, Homogeneous Embedding(HE) IPM, HE Douglas-Rachford Splitting(DRS)",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
-            },},{id: "projects-",
-          title: '',
-          description: "",
+            },},{id: "projects-notes-on-constrained-stein-variational-inference",
+          title: 'Notes on Constrained Stein Variational Inference',
+          description: "Constrained Global Optimization through SVI: MultiModal,NonConvex-NonConnected-NonDifferentiable, Hard Constraints, GPU Acceleration.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/4_project/";
             },},{id: "projects-inverter-modulation",
