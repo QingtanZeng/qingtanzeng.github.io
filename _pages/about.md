@@ -80,7 +80,7 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
 <div class="projects">
   {% assign selected_projects = site.projects | where: "category", "work" | sort: "importance" %}
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-4">
+    <div class="row row-cols-1 row-cols-md-3">
       {% for project in selected_projects %}
         {% include projects.liquid %}
       {% endfor %}
