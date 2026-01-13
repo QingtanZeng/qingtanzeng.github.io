@@ -23,6 +23,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
+        },{id: "nav-software",
+          title: "Software",
+          description: "Open Source Implementations provided by me.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/software/";
+          },
         },{id: "nav-solfware",
           title: "Solfware",
           description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
@@ -32,7 +39,7 @@ ninja.data = [{
           },
         },{id: "nav-cv",
           title: "CV",
-          description: "This is a description of the page. You can modify it in &#39;_pages/cv.md&#39;. You can also change or remove the top pdf download button.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -451,6 +458,21 @@ ninja.data = [{
           description: "Report on Active Discharge",
           section: "Projects",handler: () => {
               window.location.href = "/projects/7_project/";
+            },},{id: "projects-ctrjgen-computational-trajectory-generation",
+          title: 'CTrjGen (Computational Trajectory Generation)',
+          description: "Sequential Convex Programming for trajectory generation with hand-parser.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/repo1/";
+            },},{id: "projects-",
+          title: '',
+          description: "",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/repo2/";
+            },},{id: "projects-clocomani-humanoid-computational-loco-manipulation-of-humanoid-robots",
+          title: 'CLocoMani_Humanoid (Computational Loco-Manipulation of Humanoid Robots)',
+          description: "Integrated whole-body kinematics and operation dynamics based on sequential convex programming.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/repo3/";
             },},{
         id: 'social-cv',
         title: 'CV',
