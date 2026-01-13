@@ -9,7 +9,7 @@ category: work
 related_publications: false
 ---
 
-## I. Introduction {#i.-introduction .标题3z}
+## I. Introduction
 
 逆变器作为电机控制的执行器，将电池储能转换为电机动力，实现电控算法和软件的"比特"控制高响应、全工况、高效率的"瓦特"。电机电磁控制器和调制算法是逆变器软件的核心。
 
