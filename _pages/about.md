@@ -39,8 +39,7 @@ Subsequently, I served as a Motor Control Software Engineer responsible for
 PMSM control of NEVs' electric drive axle at United Automotive Electronic Systems (a Bosch subsidiary) 
 from 2022 to 2025, where I was officially certified as a Departmental Expert.
 
-
-<br><br><br>
+<br>
 
 ## Experience
 
@@ -74,6 +73,8 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
   </div>
   <div style="font-style: italic; color: #555;">B.Eng. in Vehicle Engineering</div>
 </div>
+
+<br>
 
 ## Projects
 <div class="projects">
