@@ -43,25 +43,34 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
 <br><br><br>
 
 ## Experience
-<div style="margin-bottom: 25px;"> <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (UAES)</div>
-    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2022 – 2025</div>
+
+<div style="margin-bottom: 25px;">
+  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 10px;">
+    
+    <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (Bosch)</div>
+    
+    <div style="color: gray; font-size: 0.9em; text-align: center; white-space: nowrap;">2022 – 2025</div>
+    
+    <div></div>
   </div>
-  <div style="font-style: italic; color: #555;">Motor Control Software Engineer | Departmental Expert</div>
+  
+  <div style="font-style: italic; color: #555;">Motor Control Software Engineer | Subject Matter Expert</div>
 </div>
 
 <div style="margin-bottom: 25px;">
-  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 10px;">
     <div style="font-weight: bold; font-size: 1.1em;">Beijing Institute of Technology (BIT)</div>
-    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2019 – 2022</div>
+    <div style="color: gray; font-size: 0.9em; text-align: center; white-space: nowrap;">2019 – 2022</div>
+    <div></div>
   </div>
   <div style="font-style: italic; color: #555;">M.Sc. in Mechanical Engineering (NERC-EV)</div>
 </div>
 
 <div style="margin-bottom: 25px;">
-  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 10px;">
     <div style="font-weight: bold; font-size: 1.1em;">Jilin University</div>
-    <div style="color: gray; font-size: 0.9em; min-width: 110px; text-align: right;">2015 – 2019</div>
+    <div style="color: gray; font-size: 0.9em; text-align: center; white-space: nowrap;">2015 – 2019</div>
+    <div></div>
   </div>
   <div style="font-style: italic; color: #555;">B.Eng. in Vehicle Engineering</div>
 </div>
