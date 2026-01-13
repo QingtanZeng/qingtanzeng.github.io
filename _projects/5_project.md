@@ -1,80 +1,93 @@
 ---
 layout: page
-title: project 5
-description: a project with a background image
-img: assets/img/1.jpg
+title: Inverter Modulation
+author: Qingtan Zeng
+description: Report on Inverter Modulation
+img: assets/img/.png
 importance: 3
-category: fun
+category: work
+related_publications: false
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+# Inverter Modulation
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+## I. Introduction {#i.-introduction .标题3z}
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+逆变器作为电机控制的执行器，将电池储能转换为电机动力，实现电控算法和软件的"比特"控制高响应、全工况、高效率的"瓦特"。电机电磁控制器和调制算法是逆变器软件的核心。
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
+<p align="center">
+<img alt="Modulation Map"
+    title="Modulation Map"
+    src="/assets/img/Proj05_image1.png"
+    width="800px" />
+</p>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+20世纪70年代后，随着功率半导体硬件的成熟，调制技术也逐步收敛，形成了PWM和Programmed两大类别。在三相交流电机控制领域，主要有以下广泛应用的调制算法，
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+i.  **SVPWM: Space Vector PWM**
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+> 三相(两电平)逆变器的默认调制方式，其线性区间在$\ MI \in \lbrack 0,\ 0.907\rbrack\ $。
 
-{% raw %}
+ii. **DPWM: Discontinuous PWM**
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
+> 仅使用一种0矢量，即某一相电压被钳位到正母线或负母线电压上，但不影响三相基频电流的调频调幅，从而理论上降低33%的开关损耗。
+>
+> DPWM60的$\ 60^{o}\ $钳位区间在端电压幅值峰值附近，适合高功率因数负载，如永磁同步电机，其在大电流高调制比下节能显著；
+>
+> DPWM30的钳位区间拆成两个$\ 30^{o}\ $并向两边偏移至驼峰处，通常仅用作过调制区的过度方法。
 
-{% endraw %}
+iii. **6-Step: 方波控制**
+
+> 基频周期内仅6次开关动作，可输出MI=1的不可变电压幅值，仅能调相，且包含大量$\ 6k \pm 1\ $次谐波。
+
+iv. **P-PWM: Programmed PWM**
+
+> 又名**SHE-PWM** (Selective Harmonic
+> Elimination)或Optimal-PWM，其在6-Step基础上通过"挖槽"来改变基频幅值，或消除特定低频谐波。其发波模式仅能离线计算并在线查表使用，动态响应较差，与6-Step配合使用。
+
+## II. 自适应变频调制
+
+调制模块的设计有三个自由度，1) 调制算法{SVPWM, DPWM60, P-PWM, 6-Step},
+2) 开关频率与更新方式, 3) 过调制上限。
+
+同时，调制模块作为逆变器硬件的核心驱动逻辑，其直接与几乎所有的电控和电驱性能相关：
+
+1)  **电流控制环性能**:
+    如控制频率、带宽(响应速度)，高转速下的饱和控制等；
+
+2)  **谐波和NVH**:
+    PWM方式造成高频载波谐波与噪音，而过调制区间引入基频谐波与噪音；同时谐波注入需要足够的载波比和电压余量支持；
+
+3)  **温度与效率**:
+    不同的参数选择有不同的电压幅值和谐波表现，因此其直接决定了损耗在逆变器各个器件、电机转子、定子等环节上的分配，进而决定了如何估计部件温升，和整机效率；
+
+4)  **电驱性能边界**:
+    电流控制器和调制模块的协同设计，直接决定了最高转速、最高功率、堵转峰值等极限性能；
+
+5)  **降额保护**:
+    若逆变器或电机温度过高，如何调整参数以延长功率输出，需在不同指标间协同Trade
+    Off.
+
+6)  **...**
+
+因此，围绕上述目标，需依据整车工况和性能需求，设计一套逻辑和标定数据，决定如何选择{$\ stModl,\ \ f_{swt},\ MI_{Max}$}。
+
+## III. 抖频优化
+
+PWM类调制方式会带来高频载波谐波，直接造成了相关频率的NVH，以及母线电流纹波。不同车型和工况对NVH有性能要求，而母线电流纹波则涉及到了电容设计、电池安全、轴电流腐蚀、母线部件NVH等系统。
+
+抖频(Spectrum
+Spread)将单一频率的谐波峰值及能量，通过随机变频的方式抖动到附近的区间内，听觉近似白噪音，可极大减小单一高频噪音的不舒适感。因此抖频相关的设计，如随机数生成、可变粗糙度、分布形式等，需协同物理传递路径和最终需求，协同定义。
+
+![](./assets/media/image2.jpeg){width="3.6233759842519686in"
+height="1.91416447944007in"}
+
+## IV. 主动热平衡
+
+整车弹射起步需要堵转时达到峰值扭矩，输出时长需尽可能长以达到最佳体验。然而，在堵转的电流环路中，电流最大的某相的上下桥臂，会分别出现二极管或开关管过热，且上下桥臂温升不均衡，因此，主动热平衡协同调制算法、器件温度估计、损耗平衡算法和电流控制器，主动分配电流带来的损耗，减少绝对损耗和不平衡现象，可显著提高堵转峰值扭矩的时长。
+
+## V. 低载波比高速控制
+
+高转速时载波比低于24，动态性能减弱；调制系数进入过调制区间，引入基频谐波；调制方法逐步从PWM过度到P-PWM和6-Step；电压能力接近饱和。
+
+在上述挑战下，如何确保调制参数的平稳过度，电流控制器稳定性、抗饱和能力，电流工作点的轨迹等，是高转速鲁棒控制的核心设计。
