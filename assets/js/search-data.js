@@ -441,8 +441,8 @@ ninja.data = [{
           description: "Report on Inverter Modulation",
           section: "Projects",handler: () => {
               window.location.href = "/projects/5_project/";
-            },},{id: "projects-inverter-modulation",
-          title: 'Inverter Modulation',
+            },},{id: "projects-pulse-heating",
+          title: 'Pulse Heating',
           description: "Report on Pulse Heating",
           section: "Projects",handler: () => {
               window.location.href = "/projects/6_project/";
