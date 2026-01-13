@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Inverter Modulation
+title: Pulse Heating
 author: Qingtan Zeng
 description: Report on Pulse Heating
 img: assets/img/Proj06_Pulseheating.png
@@ -31,7 +31,7 @@ related_publications: false
     完全不同于旋转磁场的控制，需依据波形定制化设计电流控制器;
 
 3.  **电感饱和:**
-    通常400-800V母线电压会导致很高的$\ dV/dt\ $，因此需在低载波比下稳定控制周期波形，避免电感饱和造成失稳过流；
+    通常400-800V母线电压会导致很高的$dI/dt$，因此需在低载波比下稳定控制周期波形，避免电感饱和造成失稳过流；
 
 4.  **转子过热退磁:**
     交流磁链会导致转子涡流损耗及快速温升，因此需实时估计转子温度并适时保护；

@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Accelerating Forward Autonomous Future | CTRL, OCP, Robot, GNC on Vehicle
+subtitle: Accelerating Forward Autonomous Future | CTRL, OCP, GNC on Vehicle, Robot
 
 profile:
   align: right
@@ -42,7 +42,7 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
 
 ## Selected Projects
 <div class="projects">
-  {% assign selected_projects = site.projects | where_exp: "item", "item.importance <= 2" | sort: "importance" %}
+  {% assign selected_projects = site.projects | where_exp: "item", "item.importance <= 4" | sort: "importance" %}
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
       {% for project in selected_projects %}
