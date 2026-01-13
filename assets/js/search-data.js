@@ -30,13 +30,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/software/";
           },
-        },{id: "nav-solfware",
-          title: "Solfware",
-          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/repositories/";
-          },
         },{id: "nav-cv",
           title: "CV",
           description: "",
@@ -423,8 +416,8 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "projects-computational-loco-manipulation-of-humanoid-robots",
-          title: 'Computational Loco-Manipulation of Humanoid Robots',
+          section: "News",},{id: "projects-computational-loco-manipulation",
+          title: 'Computational Loco-Manipulation',
           description: "C++ implementation of trajectory generation of Full Loco-Manipulation Model based on SCP and DRS",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
@@ -463,9 +456,9 @@ ninja.data = [{
           description: "Sequential Convex Programming for trajectory generation with hand-parser.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/repo1/";
-            },},{id: "projects-",
-          title: '',
-          description: "",
+            },},{id: "projects-goptinfer-global-optimization-as-inference",
+          title: 'GOptInfer (Global Optimization As Inference)',
+          description: "Constrained Global Optimization through SVI",
           section: "Projects",handler: () => {
               window.location.href = "/projects/repo2/";
             },},{id: "projects-clocomani-humanoid-computational-loco-manipulation-of-humanoid-robots",
