@@ -47,7 +47,7 @@ from 2022 to 2025, where I was officially certified as a Departmental Expert.
 <div style="margin-bottom: 25px;">
   <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 10px;">
     
-    <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (Bosch)</div>
+    <div style="font-weight: bold; font-size: 1.1em;">United Automotive Electronic Systems (UAES)</div>
     
     <div style="color: gray; font-size: 0.9em; text-align: center; white-space: nowrap;">2022 – 2025</div>
     
