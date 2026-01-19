@@ -6,10 +6,12 @@ img: assets/img/Proj02_image1.jpg
 importance: 1
 category: work
 related_publications: false
-github: QingtanZeng/CTrjGen.jl
+github: https://github.com/QingtanZeng/CTrjGen.jl
 ---
 
 ## I. Overview on Sequential Convex Programming
+
+Project Repo: [CTrjGen.jl](https://github.com/QingtanZeng/CTrjGen.jl)
 
 **Sequential Convex Programming** (SCP) is a type of multiple-shooting
 direct method for numerical optimal control problems, modeled from

@@ -6,11 +6,12 @@ img: assets/img/Proj03_solver01.jpg
 importance: 4
 category: work
 related_publications: false
-github: QingtanZeng/CvxSolverImpl # (可选) 在页面标题处显示 GitHub 仓库链接按钮
-# redirect: https://github.com/QingtanZeng/YourRepoName # (可选) 若需点击卡片直接跳转 GitHub，请取消注释此行
+github: https://github.com/QingtanZeng/CvxSolverImpl
 ---
 
 ## I. Introduction
+
+Project Repo: [CvxSolverImpl](https://github.com/QingtanZeng/CvxSolverImpl)
 
 Whether in the field of general STEM subjects, or control and GNC,
 **modeling and solving of optimization problem** are increasingly being

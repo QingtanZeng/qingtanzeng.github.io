@@ -10,9 +10,9 @@ related_publications: false
 github: https://github.com/QingtanZeng/CLocoMani_Humanoid
 ---
 
-Project Repo: [QingtanZeng/CLocoMani_Humanoid](https://github.com/QingtanZeng/CLocoMani_Humanoid)
-
 ## I. Introduction
+
+Project Repo: [QingtanZeng/CLocoMani_Humanoid](https://github.com/QingtanZeng/CLocoMani_Humanoid)
 
 When humanoid robots perform tasks such as moving goods, opening doors
 and so on, upper-limb manipulation will significantly affect overall

@@ -6,10 +6,12 @@ img: assets/img/Proj04_Particles.jpg
 importance: 2
 category: work
 related_publications: false
-github: QingtanZeng/GOptInfer.jl
+github: https://github.com/QingtanZeng/GOptInfer.jl
 ---
 
 ## I. Overview of Global Optimization
+
+Project Repo: [GOptInfer.jl](https://github.com/QingtanZeng/GOptInfer.jl)
 
 ### 1.1 From Convex Programming to Variational Inference
 
@@ -103,7 +105,8 @@ non-parametric representation of the variational posterior)，
 
 $$q^{*}(x) = \arg\min_{q(x)}\ KL(q(x)||p(x))$$
 
-式中$\ x \in R^{d}\ $，$\ p,\ q\ $分别为$\ R^{d}\ $上的两个概率密度函数。SVI使用一组粒子表示分布$\ q(x)\ $，并迭代更新这组粒子以最小化 $ KL(q(x)||p(x)) $，
+式中$ x \in R^{d}\ $，$\ p,\ q $分别为$ R^{d} $上的两个概率密度函数。SVI使用一组粒子表示分布$q(x)$，
+并迭代更新这组粒子以最小化$KL(q(x)||p(x))$，
 
 $$q(x) = \frac{1}{N}\sum_{i = 1}^{N}{\delta(x - x^{i})}$$
 
@@ -129,6 +132,7 @@ i.  **RBF核函数**
 两个轨迹在空间中的相似性通过其距离的指数衰减衡量的，
 
 $$k(x,y) = \sigma^{2}exp( - \frac{|x - y|^{2}}{2l^{2}})$$
+
 式中$\ l > 0\ $是长度尺度参数，$\ \sigma\ $是信号方差参数。
 
 ii. **多项式核函数**
