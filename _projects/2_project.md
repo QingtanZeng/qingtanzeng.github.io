@@ -6,6 +6,7 @@ img: assets/img/Proj02_image1.jpg
 importance: 1
 category: work
 related_publications: false
+github: QingtanZeng/CTrjGen.jl
 ---
 
 ## I. Overview on Sequential Convex Programming

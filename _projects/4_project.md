@@ -6,6 +6,7 @@ img: assets/img/Proj04_Particles.jpg
 importance: 2
 category: work
 related_publications: false
+github: QingtanZeng/GOptInfer.jl
 ---
 
 ## I. Overview of Global Optimization
@@ -119,7 +120,7 @@ $$\phi^{*}\left( x^{i} \right) = \frac{1}{N}\sum_{j = 1}^{N}{K\left( x^{i},x^{j}
 
 因此，粒子最终会聚集在几个局部最小值附近，然后得到多模态可行和局部最优解。
 
-#### 1.B 核函数$\mathbf{\ Κ\ }$
+#### 1.B 核函数 K
 
 核函数通常有以下选择，
 

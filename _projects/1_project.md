@@ -7,6 +7,7 @@ img: assets/img/CLocomani.png
 importance: 3
 category: work
 related_publications: false
+github: QingtanZeng/CLocoMani_Humanoid
 ---
 
 ## I. Introduction

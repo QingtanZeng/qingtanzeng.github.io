@@ -6,11 +6,13 @@ img: assets/img/Proj03_solver01.jpg
 importance: 4
 category: work
 related_publications: false
+github: QingtanZeng/CvxSolverImpl # (可选) 在页面标题处显示 GitHub 仓库链接按钮
+# redirect: https://github.com/QingtanZeng/YourRepoName # (可选) 若需点击卡片直接跳转 GitHub，请取消注释此行
 ---
 
 ## I. Introduction
 
-Whether in the filed of general STEM subjects, or control and GNC,
+Whether in the field of general STEM subjects, or control and GNC,
 **modeling and solving of optimization problem** are increasingly being
 based as the **fundamental paradigm**, from upper-layer problem and its
 numerical algorithm. Especially after **IPM** theory became mature in
@@ -199,8 +201,7 @@ $$u^{k + 1} = \left( I + N_{C} \right)^{- 1}\left( 2{\widetilde{u}}^{k + 1} - w^
 
 因此，DRS迭代过程如下
 
-$${{\widetilde{u}}^{k + 1} = (I + M)^{- 1}\left( w^{k} - q \right)
-}$$
+$${ \widetilde{u}^{k + 1} = (I + M)^{- 1}\left( w^{k} - q \right) }$$
 
 $${u^{k + 1} = \Pi_{C}\left( 2{\widetilde{u}}^{k + 1} - w^{k} \right)}$$
 
