@@ -304,10 +304,10 @@ $$J_{tr} = w_{tr}^{T}\eta + w_{tr,p}\eta_{p}$$
 尽管惩罚权重可以手工设计标定，但在SCP收敛过程中可被设计为依据动力学轨迹可行性的动态更新，借用动力学轨迹propagation获得的defect，定义
 
 <p align="center">
-<img alt="Proj02_scp_transcription"
-    title="Proj02_scp_transcription"
+<img alt="Proj02_weights_of_trust_region"
+    title="Proj02_weights_of_trust_region"
     src="/assets/img/Proj02_trustregion.jpg"
-    width="400px" />
+    width="200px" />
 </p>
 
 式中$\ \Delta_{\min}\ $为L1-Norm权重提供一个数值上界，以保持合理的缩放尺寸并避免条件数过差带来的数值问题。动态更新的权重鼓励存在较大误差的节点变量有更大的步长，而惩罚已接近收敛的节点变量尽量保持不动，但依然允许所有优化变量在信赖域内同时优化调整。在迭代过程中，Solver内环将硬约束残差逐步缩减至0，SCP外环则引导信赖域半径逐步收敛至0，从而获得可行轨迹，并避免人为无界问题。
@@ -322,10 +322,9 @@ Control)变量，以确保每个线性化和凸化的子问题必然存在解，
 
 $${x_{k + 1} = A_{k}x_{k} + B_{k}^{-}u_{k} + B_{k}^{+}u_{k + 1} + S_{k}s + d_{k} + v_{k}}$$
 
-$${{\overline{h}}_{j} - v_{k}' \leq 0,\ \ \ v_{k}' \geq 0,\ \ \ j = 1,..,n_{ncvx}}$$
+$${ \overline{h}_{j} - v_{k}' \leq 0, v_{k}' \geq 0, j = 1,..,n_{ncvx} }$$
 
-$A_{0}x_{1} + E_{0}p + r_{0} + v_{0} = 0$,
-$A_{N}x_{N} + E_{N}p + r_{N} + v_{N} = 0$
+$${A_{0}x_{1} + E_{0}p + r_{0} + v_{0} = 0, A_{N}x_{N} + E_{N}p + r_{N} + v_{N} = 0 }$$
 
 式中$\ v_{k},\ v_{k}'\ $分别为加入动力学约束和非凸约束中的虚拟控制松弛变量。
 
@@ -378,13 +377,15 @@ Preconditioning也会进行缩放处理，但在问w题定义时的缩放有助�
 $${x_{k} = S_{x}{\widehat{x}}_{k} + c_{x}
 }{u_{k} = S_{u}{\widehat{u}}_{k} + c_{u}
 }{p = S_{p}\widehat{p} + c_{p}
-}$$式中$\ S\ $是对角缩放矩阵，$\ c\ $是中心化向量。通常已知所有物理量的实际范围是
+}$$
+
+式中$\ S\ $是对角缩放矩阵，$\ c\ $是中心化向量。通常已知所有物理量的实际范围是
 
 $${z_{i} \in \left\lbrack z_{i,min},z_{i,max} \right\rbrack}$$
 
 ，预期缩放范围是
 
-$${{\widehat{z}}_{i} \in \lbrack{\widehat{z}}_{lb},\ {\widehat{z}}_{rb}\rbrack = \lbrack 0,1\rbrack}$$
+$${ \widehat{z}_{i} \in [ \widehat{z}_{lb}, \widehat{z}_{rb} ] = [0,1]}$$
 
 ，则可推导得，
 
@@ -434,7 +435,7 @@ $${(\sigma_{k},\mu_{k}) \in C_{soc,d + 1}}$$
 <img alt="Sparse Matrix Visualization"
     title="Sparse Matrix Visualization"
     src="/assets/img/Proj02_trjdb_pgm_init.png"
-    width="1000px" />
+    width="800px" />
 </p>
 
 ## IV. Reference
