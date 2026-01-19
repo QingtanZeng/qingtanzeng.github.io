@@ -7,8 +7,10 @@ img: assets/img/CLocomani.png
 importance: 3
 category: work
 related_publications: false
-github: QingtanZeng/CLocoMani_Humanoid
+github: https://github.com/QingtanZeng/CLocoMani_Humanoid
 ---
+
+Project Repo: [QingtanZeng/CLocoMani_Humanoid](https://github.com/QingtanZeng/CLocoMani_Humanoid)
 
 ## I. Introduction
 
