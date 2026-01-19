@@ -307,7 +307,7 @@ maximum size is ideal for loco-manipulation tasks, where all constraints
 and objectives are pre-modeled, then selectively activated by specific
 problem or states.
 
-Refer directly to \<Computational Trajectory Generation\> and
+Refer directly to [**\<Computational Trajectory Generation\>**](https://qingtanzeng.github.io/projects/2_project) and
 [**CTrjGen.jl**](https://github.com/QingtanZeng/CTrjGen.jl)[5].
 
 ## V. Reference
