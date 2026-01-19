@@ -67,7 +67,7 @@ iLQR，可以快速获得局部最优且满足硬约束的可行轨迹；但在�
 
 博弈问题，如微分动态规划，存在多个博弈均衡点，且需要实时迭代观测、估计和博弈。
 
-上述应用场景对实时优化算法提出了以下要求：多模态获得多个可行解，处理目标函数的非凸，满足非凸和非线性的硬约束...
+上述应用场景对实时优化算法提出了以下要求：**多模态获得多个可行解，处理目标函数的非凸，满足非凸和非线性的硬约束**...
 
 ## II. Stein Variational Inference
 
@@ -86,6 +86,7 @@ non-parametric representation of the variational posterior)，
 3)  **重采样策略**:
     在MPC迭代过程中，由于问题发生变化，重采样重新启动求解器；
 
+ \
 除此之外，类比通用锥优化器，SVI设计还需要满足以下目标，
 
 1)  **满足硬约束:** a.
@@ -101,20 +102,20 @@ non-parametric representation of the variational posterior)，
 
 $$q^{*}(x) = \arg\min_{q(x)}\ KL(q(x)||p(x))$$
 
-式中$\ x \in R^{d}\ $，$\ p,\ q\ $分别为$\ R^{d}\ $上的两个概率密度函数。SVI使用一组粒子表示分布$\ q(x)\ $，并迭代更新这组粒子以最小化$\ KL(q(x)||p(x))$，
+式中$\ x \in R^{d}\ $，$\ p,\ q\ $分别为$\ R^{d}\ $上的两个概率密度函数。SVI使用一组粒子表示分布$\ q(x)\ $，并迭代更新这组粒子以最小化 $ KL(q(x)||p(x)) $，
 
 $$q(x) = \frac{1}{N}\sum_{i = 1}^{N}{\delta(x - x^{i})}$$
 
 SVGD使用下式更新粒子群
 
 $$x_{k + 1}^{i} = x_{k}^{i} + \epsilon\phi^{*}(x_{k}^{i})$$
+
 式中，其中基于可微分正定核函数$\ Κ\ $的更新方向$\ \phi^{*}\ $被定义为
 
 $$\phi^{*}\left( x^{i} \right) = \frac{1}{N}\sum_{j = 1}^{N}{K\left( x^{i},x^{j} \right)\mathbf{\nabla}_{\mathbf{x}^{\mathbf{j}}}\log p\left( x^{j} \right) + \mathbf{\nabla}_{\mathbf{x}^{\mathbf{j}}}K\left( x^{i},x^{j} \right)}$$
 
-式中第一项为"Driving
-Force"，驱动粒子向目标分布的高概率区域集中，即寻找局部极小点；第二项为"Repulsive
-Force"，互斥力使得粒子相互远离，以防坍缩至相同的局部极小区域。
+式中第一项为"Driving Force"，驱动粒子向目标分布的高概率区域集中，即寻找局部极小点；
+第二项为"Repulsive Force"，互斥力使得粒子相互远离，以防坍缩至相同的局部极小区域。
 
 因此，粒子最终会聚集在几个局部最小值附近，然后得到多模态可行和局部最优解。
 
@@ -140,6 +141,7 @@ iii. **有理函数核**
 逆多象限 (Inverse Multiquadric, IMQ) 核，
 
 $$k(x,y) = \left( c^{2} + |x - y|^{2} \right)^{- \beta}$$
+
 通常 $\beta = 0.5$，
 
 ### 2.2 Constrained Stein Variational Inference
@@ -169,7 +171,7 @@ Variational Gradient Descent**
 
 ### 2.8 Summary
 
-## V. Reference {#v.-reference .标题3z}
+## V. Reference
 
 \[1\] Liu, Q., & Wang, D. (2016). Stein variational gradient descent: A
 general purpose bayesian inference algorithm. Advances in neural
